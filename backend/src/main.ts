@@ -5,12 +5,13 @@ import * as http from 'http';
 import * as https from 'https';
 import * as express from 'express';
 import { ExpressAdapter } from '@nestjs/platform-express';
-
-const httpsOptions = {
-  key: fs.readFileSync('./server.truongkyle.tech/privkey.pem'),
-  cert: fs.readFileSync('./server.truongkyle.tech/fullchain.pem'),
-};
-
+let httpsOptions = {};
+try {
+  httpsOptions = {
+    key: fs.readFileSync('./server.truongkyle.tech/privkey.pem'),
+    cert: fs.readFileSync('./server.truongkyle.tech/fullchain.pem'),
+  };
+} catch (e) {}
 async function bootstrap() {
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));

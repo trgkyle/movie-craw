@@ -1,7 +1,4 @@
-import { MailReceptModule } from './module/mail-recept/mail-user.module';
-import { ProxyModule } from './module/proxy/proxy.module';
 import { JobsModule } from './module/jobs/jobs.module';
-import { FacebookUserModule } from './module/facebook-user/facebook-user.module';
 import { AuthenModule } from './module/authen/authen.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -34,11 +31,8 @@ import { CronModule } from './cron/cron.module';
     }),
     UserModule,
     AuthenModule,
-    FacebookUserModule,
-    ProxyModule,
     CronModule,
     JobsModule,
-    MailReceptModule
   ],
   controllers: [AppController],
   providers: [AppService],

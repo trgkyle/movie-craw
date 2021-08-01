@@ -1,17 +1,11 @@
-import { ProxyCronService } from './proxycron.service';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
+import { PhimmoiScronService } from './phimmoi.service';
 // import { facebookService } from '../services/facebook';
-import { FacebookCronService } from './facebookcron.service';
-import { GoogleCronService } from './googlecron.service';
 
 @Injectable()
 export class CronService {
-  constructor(
-    private facebookCronService: FacebookCronService,
-    private googleCronService: GoogleCronService,
-    private proxyCronService: ProxyCronService,
-  ) {}
+  constructor(private phimmoiScronService: PhimmoiScronService) {}
   private readonly logger = new Logger(CronService.name);
 
   // @Cron('45 * * * * *')
@@ -24,19 +18,20 @@ export class CronService {
   //   }
   // }
 
-  // @Timeout(0)
+  @Timeout(0)
   // @Cron('*/37 * * * * *')
-  // async handleCreateFacebookAccount() {
-  //   this.logger.debug('FACEBOOK CREATE ACCOUNT JOBS ATTACHED');
-  //   try {
-  //     await Promise.all([
-  //       this.facebookCronService.facebookCreateAccountMobileJobs(),
-  //       // this.facebookCronService.facebookCreateAccountJobs(),
-  //     ]);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
+  async handlePhimmoiJob() {
+    this.logger.debug('Phimmoi CRAWL JOBS ATTACHED');
+    try {
+      await Promise.all([
+        this.phimmoiScronService.phimmoiCrawFirmList(),
+        // this.facebookCronService.facebookCreateAccountMobileJobs(),
+        // this.facebookCronService.facebookCreateAccountJobs(),
+      ]);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   // @Timeout(100)
   // // @Cron('10 * * * * *')
   // async handleCreateGoogleAccount() {
