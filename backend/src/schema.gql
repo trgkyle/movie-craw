@@ -1,0 +1,148 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type FacebookUserListResult {
+  cookie: String!
+  id: String!
+  password: String!
+  status: String!
+  username: String!
+  waitingVerifyCode: String
+}
+
+type FacebookUserRegisterResult {
+  status: String!
+}
+
+type FacebookUserValidateResult {
+  cookie: String!
+  status: String!
+}
+
+type GoogleUserListResult {
+  cookie: String!
+  id: String!
+  password: String!
+  status: String!
+  username: String!
+  waitingVerifyCode: String
+}
+
+type GoogleUserRegisterResult {
+  status: String!
+}
+
+type GoogleUserValidateResult {
+  cookie: String!
+  status: String!
+}
+
+type JobData {
+  numberAccount: Float
+  post_link: String
+  status: Boolean!
+}
+
+type JobsDeleteResult {
+  status: Boolean!
+}
+
+type JobsListResult {
+  id: String!
+  job_data: JobData!
+  job_type: String!
+  status: Boolean!
+}
+
+type JobsRegisterResult {
+  status: Boolean!
+}
+
+type MailReceptListResult {
+  email: String!
+  id: String!
+  provider: String
+  rapidConfig: String
+  supportedBy: String
+}
+
+type MailReceptReadContentResult {
+  content: String!
+  status: String!
+}
+
+type MailReceptRegisterResult {
+  email: String!
+  status: String!
+}
+
+type Mutation {
+  addFacebookReactJob(post_link: String!): JobsRegisterResult!
+  addGoogleUser(cookie: String!, password: String!, username: String!): GoogleUserRegisterResult!
+  addProxy(proxy: String!, proxyName: String!): ProxyRegisterResult!
+  completeCreateFacebookUser(username: String!): FacebookUserRegisterResult!
+  confirmCodeCreateFacebookUser(code: String!, username: String!): FacebookUserValidateResult!
+  createFacebookAccountJob(numberAccount: Float!): JobsRegisterResult!
+  createFacebookUser(dateOfBirth: String!, email: String!, firstName: String!, gender: String!, lastName: String!, password: String!, phone: String!): FacebookUserRegisterResult!
+  createGoogleUser(dateOfBirth: String!, email: String!, firstName: String!, gender: String!, lastName: String!, password: String!, phone: String!): GoogleUserRegisterResult!
+  createMailRecept(email: String!, provider: String!): MailReceptRegisterResult!
+  createRandomMailRecept(provider: String!): MailReceptRegisterResult!
+  deleteFacebookUser(id: [String!]!): FacebookUserRegisterResult!
+  deleteGoogleUser(id: [String!]!): GoogleUserRegisterResult!
+  deleteJob(id: [String!]!): JobsDeleteResult!
+  deleteMailRecept(id: [String!]!): MailReceptRegisterResult!
+  deleteProxy(id: [String!]!): ProxyRegisterResult!
+  login(email: String!, password: String!): UserLoginResult!
+  loginFacebookUser(password: String!, username: String!): FacebookUserValidateResult!
+  register(email: String!, password: String!): UserRegisterResult!
+  submitLoginFacebookUser(cookie: String!, password: String!, username: String!): FacebookUserRegisterResult!
+  validateGoogleUser(password: String!, username: String!): GoogleUserValidateResult!
+  validateProxy(proxy: String!): ProxyValidateResult!
+}
+
+type ProxyDefaultAddressResult {
+  ipAddress: String
+  pingIpAddress: String!
+}
+
+type ProxyListResult {
+  id: String!
+  ipAddress: String!
+  name: String!
+  status: Boolean!
+  updated_at: String!
+  validate: String!
+}
+
+type ProxyRegisterResult {
+  status: Boolean!
+}
+
+type ProxyValidateResult {
+  status: Boolean!
+}
+
+type Query {
+  facebookUsers: [FacebookUserListResult!]!
+  googleUsers: [GoogleUserListResult!]!
+  jobs: [JobsListResult!]!
+  mailRecept: [MailReceptListResult!]!
+  proxies: [ProxyListResult!]!
+  proxyDefaultAddress: ProxyDefaultAddressResult!
+  readMailRecept(email: String!, provider: String!): MailReceptReadContentResult!
+  userInfo: UserInfoResult!
+}
+
+type UserInfoResult {
+  email: String!
+}
+
+type UserLoginResult {
+  token: String!
+}
+
+type UserRegisterResult {
+  email: String!
+  status: Boolean!
+}

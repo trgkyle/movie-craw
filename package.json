@@ -1,0 +1,28 @@
+{
+  "name": "movie-crawl",
+  "version": "1.0.0",
+  "description": "run dev frontend: yarn start backend: yarn start:dev",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npm --prefix backend install",
+    "backend:prod": "PORT=443 npm --prefix backend run start:prod",
+    "build": "npm --prefix backend run build",
+    "install-backend": "npm --prefix backend install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "npm --prefix backend run build",
+    "server": "NODE_ENV=production pm2 start process.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venoftheme/seoupto.git"
+  },
+  "author": "Truong Kyle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/venoftheme/seoupto/issues"
+  },
+  "homepage": "https://github.com/venoftheme/seoupto#readme",
+  "engines": {
+    "node": ">=14.5.4"
+  }
+}
