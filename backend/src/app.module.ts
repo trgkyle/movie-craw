@@ -9,6 +9,7 @@ import { join } from 'path';
 import { UserModule } from './module/user/user.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CronModule } from './cron/cron.module';
+import { MovieModule } from './module/movie/movie.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CronModule } from './cron/cron.module';
     AuthenModule,
     CronModule,
     JobsModule,
+    MovieModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,55 +1,29 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
-import { PhimmoiScronService } from './phimmoi.service';
+import { JobsFunction } from 'src/module/jobs/jobs.function';
 // import { facebookService } from '../services/facebook';
 
 @Injectable()
 export class CronService {
-  constructor(private phimmoiScronService: PhimmoiScronService) {}
+  constructor(private jobCronFucntion: JobsFunction) {}
   private readonly logger = new Logger(CronService.name);
 
-  // @Cron('45 * * * * *')
-  // async handleFacebookReaction() {
-  //   this.logger.debug('Called when the current second is 45');
-  //   try {
-  //     await this.facebookCronService.facebookReactJobs();
-  //   } catch (e) {
-  //     console.log('Error in handle facebook reaction post');
-  //   }
-  // }
-
   @Timeout(0)
-  // @Cron('*/37 * * * * *')
-  async handlePhimmoiJob() {
-    this.logger.debug('Phimmoi CRAWL JOBS ATTACHED');
+  async handleRunJobListAfter() {
+    this.logger.debug('Called when the current second is 10');
     try {
-      await Promise.all([
-        this.phimmoiScronService.phimmoiCrawFirmList(),
-        // this.facebookCronService.facebookCreateAccountMobileJobs(),
-        // this.facebookCronService.facebookCreateAccountJobs(),
-      ]);
+      await this.jobCronFucntion.checkAndRunsJob();
     } catch (e) {
-      console.log(e);
+      console.log('Error in handle facebook reaction post');
     }
   }
-  // @Timeout(100)
-  // // @Cron('10 * * * * *')
-  // async handleCreateGoogleAccount() {
-  //   this.logger.debug('GOOGLE CREATE ACCOUNT JOBS ATTACHED');
-  //   try {
-  //     await this.googleCronService.googleCreateAccountJobs();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-
-  // @Timeout(0)
-  // async handleApplyProxy() {
-  //   this.logger.debug('PROXY SET DEFAULT ATTACHED');
-  //   try {
-  //     await this.proxyCronService.setDefaultProxy();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
+  @Cron('*/10 * * * * *')
+  async handleRunJobList() {
+    this.logger.debug('Called when the current second is 10');
+    try {
+      await this.jobCronFucntion.checkAndRunsJob();
+    } catch (e) {
+      console.log('Error in handle facebook reaction post');
+    }
+  }
 }

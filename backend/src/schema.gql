@@ -23,16 +23,39 @@ type JobsRegisterResult {
   status: Boolean!
 }
 
+type MovieInfoResult {
+  description: String!
+  movieParts: [MoviePart!]
+  name: String!
+  poster: String!
+}
+
+type MovieLink {
+  link: String!
+  name: String!
+}
+
+type MoviePart {
+  movieServers: [MovieServer!]
+  part: Float!
+  type: String!
+}
+
+type MovieServer {
+  movieLinks: [MovieLink!]
+  provider: String!
+}
+
 type Mutation {
-  addFacebookReactJob(post_link: String!): JobsRegisterResult!
-  createFacebookAccountJob(numberAccount: Float!): JobsRegisterResult!
+  addJob(name: String!): JobsRegisterResult!
   deleteJob(id: [String!]!): JobsDeleteResult!
   login(email: String!, password: String!): UserLoginResult!
   register(email: String!, password: String!): UserRegisterResult!
 }
 
 type Query {
-  jobs: [JobsListResult!]!
+  getJobs: [JobsListResult!]!
+  getMovieList(name: String): [MovieInfoResult!]!
   userInfo: UserInfoResult!
 }
 

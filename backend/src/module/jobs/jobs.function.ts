@@ -2,24 +2,38 @@ import { JobsEntity } from './jobs.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { JOB_TYPE } from './jobs.constant';
+import { MovieFunction } from '../movie/movie.function';
+import { PhimmoiService } from 'src/services/phimmoi/phimmoi.service';
 
 @Injectable()
 export class JobsFunction {
   constructor(
     @InjectRepository(JobsEntity)
     private jobsRepository: Repository<JobsEntity>,
+    private movieFunction: MovieFunction,
+    private phimmoiService: PhimmoiService,
   ) {}
-  // private async checkUserExist(username, password): Promise<Boolean> {
-  //   const result = await this.usersRepository.findOne({ username, password });
-  //   console.log({ result });
-  //   if (result) return true;
-  //   return false;
-  // }
-  public async addJob(type, data): Promise<any> {
+  public async checkAndRunsJob() {
+    const jobs = await this.jobsRepository.find({ status: false });
+    console.log(jobs);
+    for (const job of jobs) {
+      job.status = true;
+      await this.jobsRepository.save(job);
+      const jobType = job.job_type;
+      switch (jobType) {
+        case JOB_TYPE.phimmoiFirmList:
+          const categoriesLink = await this.phimmoiService.getPhimmoiCategoires();
+          console.log(categoriesLink);
+          console.log("DO FIRM PHIMMOI CRAWL");
+          break;
+      } 
+    }
+  }
+  public async addJob(type): Promise<any> {
     try {
       const newJob = new JobsEntity();
       newJob.job_type = type;
-      newJob.job_data = data;
       newJob.status = false;
       await this.jobsRepository.save(newJob);
     } catch (e) {
@@ -34,7 +48,7 @@ export class JobsFunction {
     }
   }
   public async getAllJobs(): Promise<any> {
-    const data = await this.jobsRepository.find({});
+    const data = await this.jobsRepository.find();
     return data;
   }
 }
