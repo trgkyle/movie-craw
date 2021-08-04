@@ -23,7 +23,6 @@ export async function getFirmLinkDetail(
   try {
     await page.waitForSelector('.movie-item > a');
     const aHref = await page.$$('.movie-item > a');
-    console.log(aHref);
     const yourHref = await Promise.all(
       (await Promise.all(aHref.map((a) => a.getProperty('href')))).map((href) =>
         href.jsonValue(),

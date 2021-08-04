@@ -22,11 +22,15 @@ const chromeOptions = ({ proxy }) => ({
   defaultViewport: null,
   args: argsChromeOptions({ proxy }),
 });
-
+let browser = null;
 // ############################## BROWSER ##############################
 export async function getBrowser(proxy?: string) {
-  const userAgent = new UserAgent({ deviceCategory: 'desktop' });
-  return puppeteer.launch(chromeOptions({ proxy }));
+  if (browser) {
+    return browser;
+  } else {
+    browser = await puppeteer.launch(chromeOptions({ proxy }));
+    return browser;
+  }
 }
 
 // handle action page in browser

@@ -6,7 +6,7 @@ import {
   getFirmLinkDetail,
   getVideoLink,
   startWatchFirm,
-} from 'src/services/phimmoi';
+} from '../../services/phimmoi';
 
 @Injectable()
 export class PhimmoiService {
@@ -39,7 +39,7 @@ export class PhimmoiService {
     try {
       const browser = await getBrowser();
       let phimmoiPage = await goPage({
-        url: 'https://phimmoii.org/' + categorieLink,
+        url: categorieLink,
         cookie: undefined,
         browser,
       });
@@ -61,7 +61,7 @@ export class PhimmoiService {
     try {
       const browser = await getBrowser();
       let phimmoiPage = await goPage({
-        url: 'https://phimmoii.org/' + firmLink,
+        url: firmLink,
         cookie: undefined,
         browser,
       });

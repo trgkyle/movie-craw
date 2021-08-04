@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { JOB_TYPE } from './jobs.constant';
 import { MovieFunction } from '../movie/movie.function';
-import { PhimmoiService } from 'src/services/phimmoi/phimmoi.service';
+import { PhimmoiService } from '../../services/phimmoi/phimmoi.service';
 
 @Injectable()
 export class JobsFunction {
@@ -14,21 +14,33 @@ export class JobsFunction {
     private movieFunction: MovieFunction,
     private phimmoiService: PhimmoiService,
   ) {}
+  private isRunJob: Boolean
   public async checkAndRunsJob() {
-    const jobs = await this.jobsRepository.find({ status: false });
+    if(this.isRunJob) return;
+    this.isRunJob = true;
+    const jobs = await this.jobsRepository.find({ status: true });
     console.log(jobs);
     for (const job of jobs) {
       job.status = true;
       await this.jobsRepository.save(job);
       const jobType = job.job_type;
+
+      // Run job
       switch (jobType) {
         case JOB_TYPE.phimmoiFirmList:
           const categoriesLink = await this.phimmoiService.getPhimmoiCategoires();
-          console.log(categoriesLink);
+          const linkFirmByCategoriesGroup = [];
+          await Promise.all(categoriesLink.map(async (category) => {
+            console.log(category);
+            const firmList = await this.phimmoiService.getPhimmoiFirmListLinkByCategories(category);
+            linkFirmByCategoriesGroup.push({ category, firmList });
+          }));
+          console.log(linkFirmByCategoriesGroup);
           console.log("DO FIRM PHIMMOI CRAWL");
           break;
       } 
     }
+    this.isRunJob = false;
   }
   public async addJob(type): Promise<any> {
     try {

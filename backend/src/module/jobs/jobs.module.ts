@@ -6,8 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { JobsFunction } from './jobs.function';
 import { MovieModule } from '../movie/movie.module';
-import { MovieFunction } from '../movie/movie.function';
-import { PhimmoiService } from 'src/services/phimmoi/phimmoi.service';
+import { PhimmoiService } from '../../services/phimmoi/phimmoi.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([JobsEntity]), MovieModule],

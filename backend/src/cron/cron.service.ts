@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
-import { JobsFunction } from 'src/module/jobs/jobs.function';
+import { JobsFunction } from '../module/jobs/jobs.function';
 // import { facebookService } from '../services/facebook';
 
 @Injectable()
