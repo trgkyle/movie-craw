@@ -35,17 +35,17 @@ export class PhimmoiScronService {
           // });
           // console.log(categoresLinks);
           // phimmoiPage.goto(categoresLinks[0]);
-          // await phimmoiPage.goto('https://phimmoii.org/danh-sach/phim-chieu-rap.html');
-          // const firmLinks = (await getFirmLinkDetail(phimmoiPage)).href;
+          await phimmoiPage.goto('https://phimmoii.org/danh-sach/phim-chieu-rap.html');
+          const firmLinks = (await getFirmLinkDetail(phimmoiPage)).href;
           // firmLinks.map(()=> {
             
           // });
-          // console.log(firmLinks);
+          console.log(firmLinks);
           // await phimmoiPage.goto('https://phimmoii.org/13349-qua-nhanh-qua-nguy-hiem-9.html');
           // await startWatchFirm(phimmoiPage);
-          await phimmoiPage.goto('https://phimmoii.org/watch/13436.59764-tham-phan-ac-ma-tap-1.html');
-          const firmSrc = await getVideoLink(phimmoiPage);
-          console.log(firmSrc.src);
+          // await phimmoiPage.goto('https://phimmoii.org/watch/13436.59764-tham-phan-ac-ma-tap-1.html');
+          // const firmSrc = await getVideoLink(phimmoiPage);
+          // console.log(firmSrc.src);
       } catch (e) {
         this.logger.log('ERROR FACEBOOK PAGE IN REACTION JOBS');
       } finally {
