@@ -3,9 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { closePage, getBrowser, goPage } from '../common';
 import {
   getCategories,
-  getFirmLinkDetail,
+  getFilmDetailInfo,
+  getFilmLink,
   getVideoLink,
-  startWatchFirm,
+  startWatchFilm,
 } from '../../services/phimmoi';
 
 @Injectable()
@@ -22,7 +23,7 @@ export class PhimmoiService {
         browser,
       });
       try {
-        const categoresLinks = (await getCategories(phimmoiPage)).href;
+        const categoresLinks = (await getCategories(phimmoiPage));
         return categoresLinks;
       } catch (e) {
         this.logger.log('ERROR PHIMMOI PAGE');
@@ -35,7 +36,7 @@ export class PhimmoiService {
     }
   }
 
-  public async getPhimmoiFirmListLinkByCategories(categorieLink) {
+  public async getPhimmoiFilmListLinkByCategories(categorieLink) {
     try {
       const browser = await getBrowser();
       let phimmoiPage = await goPage({
@@ -44,8 +45,8 @@ export class PhimmoiService {
         browser,
       });
       try {
-        const firmLinks = (await getFirmLinkDetail(phimmoiPage)).href;
-        return firmLinks;
+        const firmDetail = await getFilmLink(phimmoiPage);
+        return firmDetail;
       } catch (e) {
         this.logger.log('ERROR PHIMMOI PAGE');
         return null;
@@ -57,18 +58,39 @@ export class PhimmoiService {
     }
   }
 
-  public async getFirmVideoLink(firmLink) {
+  public async getFilmVideoLink(FilmLink) {
     try {
       const browser = await getBrowser();
       let phimmoiPage = await goPage({
-        url: firmLink,
+        url: FilmLink,
         cookie: undefined,
         browser,
       });
       try {
-        await startWatchFirm(phimmoiPage);
-        const firmSrc = await getVideoLink(phimmoiPage);
-        return firmSrc;
+        await startWatchFilm(phimmoiPage);
+        const FilmSrc = await getVideoLink(phimmoiPage);
+        return FilmSrc;
+      } catch (e) {
+        this.logger.log('ERROR PHIMMOI PAGE');
+      } finally {
+        await closePage(phimmoiPage);
+      }
+    } catch (e) {
+      this.logger.log('ERROR PHIMMOI PAGE');
+    }
+  }
+
+  public async getFilmDetail(filmLink) {
+    try {
+      const browser = await getBrowser();
+      let phimmoiPage = await goPage({
+        url: filmLink,
+        cookie: undefined,
+        browser,
+      });
+      try {
+        const filmInfo = await getFilmDetailInfo(phimmoiPage);
+        return filmInfo;
       } catch (e) {
         this.logger.log('ERROR PHIMMOI PAGE');
       } finally {

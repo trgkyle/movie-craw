@@ -2,6 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CategoryLink {
+  link: Float!
+  provider: String!
+}
+
+type CategoryResult {
+  categoryLinks: [CategoryLink!]
+  name: String!
+  type: String!
+}
+
 type JobData {
   numberAccount: Float
   post_link: String
@@ -54,6 +65,7 @@ type Mutation {
 }
 
 type Query {
+  getCategoryList(name: String): [CategoryResult!]!
   getJobs: [JobsListResult!]!
   getMovieList(name: String): [MovieInfoResult!]!
   userInfo: UserInfoResult!

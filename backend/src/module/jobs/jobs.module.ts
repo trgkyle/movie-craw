@@ -7,9 +7,10 @@ import { Module } from '@nestjs/common';
 import { JobsFunction } from './jobs.function';
 import { MovieModule } from '../movie/movie.module';
 import { PhimmoiService } from '../../services/phimmoi/phimmoi.service';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([JobsEntity]), MovieModule],
+  imports: [TypeOrmModule.forFeature([JobsEntity]), MovieModule, CategoryModule],
   providers: [
     JobsLoginResult,
     JobsFunction,

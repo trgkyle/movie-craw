@@ -1,9 +1,10 @@
 export const JOB_TYPE = {
-  phimmoiFirmList: 'PHIMMOI_FIRM_LIST',
+  PHIMMOI_FILM_LIST: 'PHIMMOI_FILM_LIST',
+  PHIMMOI_CATEGORY_LIST: 'PHIMMOI_CATEGORY_LIST',
 };
 export const jobGroupData = ({type, post_link, numberAccount}) => {
     switch(type){
-        case "PHIMMOI_FIRM_LIST":
+        case "PHIMMOI_FILM_LIST":
             return {
                 status: false,
                 post_link: post_link

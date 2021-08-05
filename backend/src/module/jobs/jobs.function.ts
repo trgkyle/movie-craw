@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { JOB_TYPE } from './jobs.constant';
 import { MovieFunction } from '../movie/movie.function';
 import { PhimmoiService } from '../../services/phimmoi/phimmoi.service';
+import { CategoryFunction } from '../category/category.function';
 
 @Injectable()
 export class JobsFunction {
@@ -12,33 +13,65 @@ export class JobsFunction {
     @InjectRepository(JobsEntity)
     private jobsRepository: Repository<JobsEntity>,
     private movieFunction: MovieFunction,
+    private categoryFunction: CategoryFunction,
     private phimmoiService: PhimmoiService,
   ) {}
-  private isRunJob: Boolean
+  private isRunJob: Boolean;
   public async checkAndRunsJob() {
-    if(this.isRunJob) return;
+    if (this.isRunJob) return;
     this.isRunJob = true;
-    const jobs = await this.jobsRepository.find({ status: true });
+    const jobs = await this.jobsRepository.find({ status: false });
     console.log(jobs);
     for (const job of jobs) {
-      job.status = true;
+      // job.status = true;
       await this.jobsRepository.save(job);
       const jobType = job.job_type;
-
-      // Run job
-      switch (jobType) {
-        case JOB_TYPE.phimmoiFirmList:
-          const categoriesLink = await this.phimmoiService.getPhimmoiCategoires();
-          const linkFirmByCategoriesGroup = [];
-          await Promise.all(categoriesLink.map(async (category) => {
-            console.log(category);
-            const firmList = await this.phimmoiService.getPhimmoiFirmListLinkByCategories(category);
-            linkFirmByCategoriesGroup.push({ category, firmList });
-          }));
-          console.log(linkFirmByCategoriesGroup);
-          console.log("DO FIRM PHIMMOI CRAWL");
-          break;
-      } 
+      try {
+        // Run job
+        switch (jobType) {
+          case JOB_TYPE.PHIMMOI_FILM_LIST:
+            console.log("EE");
+            const categoriesLink = await this.categoryFunction.getAllCategories();
+            for(const category of categoriesLink) {
+              for(const categoryLink of category.categoryLinks) {
+                const FilmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
+                console.log(FilmList);
+                // Film Detail
+                for(const film of FilmList) {
+                  const movie = await this.phimmoiService.getFilmDetail(film);
+                  // const movieLink = await this.phimmoiService.getFilmVideoLink(film);
+                  // console.log(movieLink);
+                  await this.movieFunction.createNewMovie(movie.title, movie.description, movie.poster);
+                }
+              }
+            }
+            break;
+          case JOB_TYPE.PHIMMOI_CATEGORY_LIST:
+            const categoriesLinks = await this.phimmoiService.getPhimmoiCategoires();
+            for (const categoryLink of categoriesLinks) {
+              console.log(categoryLink);
+              await this.categoryFunction.createNewCategory(
+                categoryLink.text,
+                '',
+                'phimmoi',
+                categoryLink.href,
+              );
+            }
+            // await Promise.all(
+            //   categoriesLink.map(async (category) => {
+            //     return
+            //     // console.log(category);
+            //     // const FilmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(category);
+            //     // linkFilmByCategoriesGroup.push({ category, FilmList });
+            //   }),
+            // );
+            console.log('DO Film PHIMMOI CRAWL');
+            break;
+        }
+        // End run job
+      } catch (e) {
+        console.log(e);
+      }
     }
     this.isRunJob = false;
   }
@@ -52,11 +85,11 @@ export class JobsFunction {
       return false;
     }
   }
-  public async deleteJobs({id}): Promise<any> {
+  public async deleteJobs({ id }): Promise<any> {
     try {
       await this.jobsRepository.delete(id);
     } catch (e) {
-      throw "Cannot delete job";
+      throw 'Cannot delete job';
     }
   }
   public async getAllJobs(): Promise<any> {
