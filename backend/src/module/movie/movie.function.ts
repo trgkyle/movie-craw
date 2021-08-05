@@ -1,4 +1,4 @@
-import { MovieEntity } from './movie.entity';
+import { MovieEntity, MovieLinkEntity, MoviePartEntity, MovieServerEntity } from './movie.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
@@ -30,17 +30,53 @@ export class MovieFunction {
   constructor(
     @InjectRepository(MovieEntity)
     private movieRepository: Repository<MovieEntity>,
+    @InjectRepository(MoviePartEntity)
+    private moviePartRepository: Repository<MoviePartEntity>,
+    @InjectRepository(MovieServerEntity)
+    private movieServerRepository: Repository<MovieServerEntity>,
+    @InjectRepository(MovieLinkEntity)
+    private movieLinkRepository: Repository<MovieLinkEntity>,
   ) {}
-  public async createNewMovie(name, description, poster): Promise<Boolean> {
-    if (!(await this.checkMovieExist(name))) {
+
+  public async createNewMovie(name, description, poster, provider, server, link): Promise<Boolean> {
+    const movie = await this.checkMovieExist(name);
+    if (!movie) {
       const newMovie = new MovieEntity();
       newMovie.name = name;
       newMovie.description = description;
       newMovie.poster = poster;
+      const newMoviePart = new MoviePartEntity();
+      newMoviePart.type = "phim-le";
+      newMoviePart.part = "FULL";
+      const newMovieServer = new MovieServerEntity();
+      newMovieServer.provider = provider;
+      const newMovieLink = new MovieLinkEntity();
+      newMovieLink.name = server;
+      newMovieLink.providerLink = '';
+      newMovieLink.videoLink = link;
+
+      newMovieServer.movieLinks = [newMovieLink];
+      newMoviePart.movieServers = [newMovieServer];
+      newMovie.movieParts = [newMoviePart];
+      await this.movieLinkRepository.save(newMovieLink);
+      await this.movieServerRepository.save(newMovieServer);
+      await this.moviePartRepository.save(newMoviePart);
       await this.movieRepository.save(newMovie);
       return true;
     }
-    throw 'Đã tồn tại phim trong hệ thống';
+    else {
+      // const categoryLink = await this.checkCategoryLinkExist(provider, link);
+      // if (!categoryLink) {
+      //   const newCategoryLink = new CategoryLinkEntity();
+      //   newCategoryLink.provider = provider;
+      //   newCategoryLink.link = link;
+      //   newCategoryLink.category = category;
+      //   category.categoryLinks.push(newCategoryLink);
+      //   await this.categoryLinkRepository.save(newCategoryLink);
+      // }
+      // await this.categoryRepository.save(category);
+      // return true;
+    }
   }
   public async checkMovieExist(name): Promise<any> {
     const movie = await this.movieRepository.find({ name });

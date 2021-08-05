@@ -68,8 +68,8 @@ export class PhimmoiService {
       });
       try {
         await startWatchFilm(phimmoiPage);
-        const FilmSrc = await getVideoLink(phimmoiPage);
-        return FilmSrc;
+        const filmSrc = await getVideoLink(phimmoiPage);
+        return filmSrc;
       } catch (e) {
         this.logger.log('ERROR PHIMMOI PAGE');
       } finally {

@@ -34,14 +34,15 @@ export class JobsFunction {
             const categoriesLink = await this.categoryFunction.getAllCategories();
             for(const category of categoriesLink) {
               for(const categoryLink of category.categoryLinks) {
-                const FilmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
-                console.log(FilmList);
+                const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
+                // console.log(filmList);
                 // Film Detail
-                for(const film of FilmList) {
+                for(const film of filmList) {
+                  console.log(film);
                   const movie = await this.phimmoiService.getFilmDetail(film);
-                  // const movieLink = await this.phimmoiService.getFilmVideoLink(film);
-                  // console.log(movieLink);
-                  await this.movieFunction.createNewMovie(movie.title, movie.description, movie.poster);
+                  const movieLink = await this.phimmoiService.getFilmVideoLink(film);
+                  console.log(movieLink);
+                  await this.movieFunction.createNewMovie(movie.title, movie.description, movie.poster, 'phimmoi', movieLink.server, movieLink.link);
                 }
               }
             }

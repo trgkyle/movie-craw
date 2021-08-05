@@ -37,7 +37,7 @@ export class MoviePartEntity extends BaseEntity {
   @ManyToOne((type) => MovieEntity, (movie) => movie.movieParts)
   movie: MovieEntity;
   @OneToMany((type) => MovieServerEntity, (movieLink) => movieLink.moviePart)
-  movieLinks: MovieServerEntity[];
+  movieServers: MovieServerEntity[];
   
 }
 
@@ -50,10 +50,10 @@ export class MovieServerEntity extends BaseEntity {
   created_at: Date;
   @UpdateDateColumn()
   updated_at: Date;
-  @ManyToOne((type) => MoviePartEntity, (movie) => movie.movieLinks)
+  @ManyToOne((type) => MoviePartEntity, (movie) => movie.movieServers)
   moviePart: MoviePartEntity;
-  @OneToMany((type) => MovieLinkEntity, (movieLink) => movieLink.movieLink)
-  movieServers: MovieLinkEntity[];
+  @OneToMany((type) => MovieLinkEntity, (movieLink) => movieLink.movieServer)
+  movieLinks: MovieLinkEntity[];
 }
 
 @Entity('movie-link')
@@ -67,6 +67,6 @@ export class MovieLinkEntity extends BaseEntity {
   created_at: Date;
   @UpdateDateColumn()
   updated_at: Date;
-  @ManyToOne((type) => MovieServerEntity, (movie) => movie.movieServers)
-  movieLink: MovieServerEntity;
+  @ManyToOne((type) => MovieServerEntity, (movie) => movie.movieLinks)
+  movieServer: MovieServerEntity;
 }
