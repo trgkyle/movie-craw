@@ -16,7 +16,7 @@ async function bootstrap() {
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   await app.init();
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && process.env.PLATFORM !== 'HEROKU') {
     console.log('Server running at : 443');
     https.createServer(httpsOptions, server).listen(443);
   } else {
