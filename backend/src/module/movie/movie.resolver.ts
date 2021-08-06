@@ -24,4 +24,15 @@ export class MovieResolver {
       throw e;
     }
   }
+  @Query((returns) => MovieInfoResult)
+  async getMovieById(@Args('id', { type: () => Number }) id: Number) {
+    try {
+      console.log(id);
+      const movie = await this.movieService.getMovieById(id);
+      console.log(movie);
+      return movie;
+    } catch (e) {
+      throw e;
+    }
+  }
 }

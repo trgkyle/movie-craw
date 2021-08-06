@@ -105,4 +105,14 @@ export class MovieFunction {
       .getMany();
     return movie;
   }
+  public async getMovieById(id: Number): Promise<any> {
+    const movie = await this.movieRepository
+      .createQueryBuilder('movie')
+      .where('movie.id = :id', { id })
+      .leftJoinAndSelect('movie.movieParts', 'movie-part')
+      .leftJoinAndSelect('movie-part.movieServers', 'movie-server')
+      .leftJoinAndSelect('movie-server.movieLinks', 'movie-link')
+      .getOne();
+    return movie;
+  }
 }

@@ -2,6 +2,8 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class MovieInfoResult {
+  @Field((type) => Int)
+  id: number;
   @Field((type) => String)
   name: String;
   @Field((type) => String)

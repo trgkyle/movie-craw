@@ -36,6 +36,7 @@ type JobsRegisterResult {
 
 type MovieInfoResult {
   description: String!
+  id: Int!
   movieParts: [MoviePart!]
   name: String!
   poster: String!
@@ -65,5 +66,6 @@ type Mutation {
 type Query {
   getCategoryList(name: String): [CategoryResult!]!
   getJobs: [JobsListResult!]!
+  getMovieById(id: Float!): MovieInfoResult!
   getMovieList(name: String): [MovieInfoResult!]!
 }
