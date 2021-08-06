@@ -2,6 +2,6 @@
     "version": 1,
     "name": "VT-movie",
     "builds": [
-      { "src": "VT-movie/package.json" }
+      { "src": "VT-movie/package.json", "use": "@vercel/next" }
     ]
   }
