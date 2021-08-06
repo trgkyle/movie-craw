@@ -23,14 +23,13 @@ export class JobsFunction {
     const jobs = await this.jobsRepository.find({ status: false });
     console.log(jobs);
     for (const job of jobs) {
-      // job.status = true;
+      job.status = true;
       await this.jobsRepository.save(job);
       const jobType = job.job_type;
       try {
         // Run job
         switch (jobType) {
           case JOB_TYPE.PHIMMOI_FILM_LIST:
-            console.log("EE");
             const categoriesLink = await this.categoryFunction.getAllCategories();
             for(const category of categoriesLink) {
               for(const categoryLink of category.categoryLinks) {

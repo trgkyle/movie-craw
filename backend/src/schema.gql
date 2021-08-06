@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type CategoryLink {
-  link: Float!
+  link: String!
   provider: String!
 }
 
@@ -60,26 +60,10 @@ type MovieServer {
 type Mutation {
   addJob(name: String!): JobsRegisterResult!
   deleteJob(id: [String!]!): JobsDeleteResult!
-  login(email: String!, password: String!): UserLoginResult!
-  register(email: String!, password: String!): UserRegisterResult!
 }
 
 type Query {
   getCategoryList(name: String): [CategoryResult!]!
   getJobs: [JobsListResult!]!
   getMovieList(name: String): [MovieInfoResult!]!
-  userInfo: UserInfoResult!
-}
-
-type UserInfoResult {
-  email: String!
-}
-
-type UserLoginResult {
-  token: String!
-}
-
-type UserRegisterResult {
-  email: String!
-  status: Boolean!
 }

@@ -14,6 +14,6 @@ export class CategoryResult {
 export class CategoryLink {
   @Field((type) => String)
   provider: string;
-  @Field((type) => Number)
-  link: number;
+  @Field((type) => String)
+  link: String;
 }

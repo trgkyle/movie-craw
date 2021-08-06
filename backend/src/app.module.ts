@@ -30,8 +30,8 @@ import { MovieModule } from './module/movie/movie.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    UserModule,
-    AuthenModule,
+    // UserModule,
+    // AuthenModule,
     CronModule,
     JobsModule,
     MovieModule

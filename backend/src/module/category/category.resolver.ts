@@ -18,8 +18,8 @@ export class CategoryResolver {
   @Query((returns) => [CategoryResult])
   async getCategoryList(@Args() args: GetCategoryArgs) {
     try {
-      const movieList = await this.categoryService.getAllCategories();
-      return movieList;
+      const categoryList = await this.categoryService.getAllCategories();
+      return categoryList;
     } catch (e) {
       throw e;
     }
