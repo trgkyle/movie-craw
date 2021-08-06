@@ -18,7 +18,7 @@ export class MovieResolver {
   @Query((returns) => [MovieInfoResult])
   async getMovieList(@Args() args: GetMovieArgs) {
     try {
-      const movieList = await this.movieService.getMovie();
+      const movieList = await this.movieService.getAllMovies();
       return movieList;
     } catch (e) {
       throw e;

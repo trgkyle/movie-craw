@@ -1,4 +1,9 @@
-import { MovieEntity, MovieLinkEntity, MoviePartEntity, MovieServerEntity } from './movie.entity';
+import {
+  MovieEntity,
+  MovieLinkEntity,
+  MoviePartEntity,
+  MovieServerEntity,
+} from './movie.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
@@ -38,7 +43,14 @@ export class MovieFunction {
     private movieLinkRepository: Repository<MovieLinkEntity>,
   ) {}
 
-  public async createNewMovie(name, description, poster, provider, server, link): Promise<Boolean> {
+  public async createNewMovie(
+    name,
+    description,
+    poster,
+    provider,
+    server,
+    link,
+  ): Promise<Boolean> {
     const movie = await this.checkMovieExist(name);
     if (!movie) {
       const newMovie = new MovieEntity();
@@ -46,8 +58,8 @@ export class MovieFunction {
       newMovie.description = description;
       newMovie.poster = poster;
       const newMoviePart = new MoviePartEntity();
-      newMoviePart.type = "phim-le";
-      newMoviePart.part = "FULL";
+      newMoviePart.type = 'phim-le';
+      newMoviePart.part = 'FULL';
       const newMovieServer = new MovieServerEntity();
       newMovieServer.provider = provider;
       const newMovieLink = new MovieLinkEntity();
@@ -63,8 +75,7 @@ export class MovieFunction {
       await this.moviePartRepository.save(newMoviePart);
       await this.movieRepository.save(newMovie);
       return true;
-    }
-    else {
+    } else {
       // const categoryLink = await this.checkCategoryLinkExist(provider, link);
       // if (!categoryLink) {
       //   const newCategoryLink = new CategoryLinkEntity();
@@ -85,8 +96,13 @@ export class MovieFunction {
     }
     return false;
   }
-  public async getMovie(): Promise<any> {
-    const movie = await this.movieRepository.find();
+  public async getAllMovies(): Promise<any> {
+    const movie = await this.movieRepository
+      .createQueryBuilder('movie')
+      .leftJoinAndSelect('movie.movieParts', 'movie-part')
+      .leftJoinAndSelect('movie-part.movieServers', 'movie-server')
+      .leftJoinAndSelect('movie-server.movieLinks', 'movie-link')
+      .getMany();
     return movie;
   }
 }

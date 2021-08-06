@@ -16,8 +16,8 @@ export class MovieInfoResult {
 export class MoviePart {
   @Field((type) => String)
   type: string;
-  @Field((type) => Number)
-  part: number;
+  @Field((type) => String)
+  part: string;
   @Field((type) => [MovieServer], { nullable: true })
   movieServers: MovieServer[];
 }
@@ -35,5 +35,5 @@ export class MovieLink {
   @Field((type) => String)
   name: string;
   @Field((type) => String)
-  link: string;
+  videoLink: string;
 }

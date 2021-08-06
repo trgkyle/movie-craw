@@ -42,13 +42,13 @@ type MovieInfoResult {
 }
 
 type MovieLink {
-  link: String!
   name: String!
+  videoLink: String!
 }
 
 type MoviePart {
   movieServers: [MovieServer!]
-  part: Float!
+  part: String!
   type: String!
 }
 
