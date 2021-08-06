@@ -1,0 +1,7 @@
+{
+    "version": 1,
+    "name": "VT-movie",
+    "builds": [
+      { "src": "VT-movie/package.json" }
+    ]
+  }
