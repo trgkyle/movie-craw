@@ -17,8 +17,6 @@ import { MovieModule } from './module/movie/movie.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
-      debug: true,
-      playground: true,
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',

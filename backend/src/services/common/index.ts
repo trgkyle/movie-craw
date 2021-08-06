@@ -12,13 +12,13 @@ const argsChromeOptions = ({ proxy }) => {
   Array.prototype.push.apply(prodOptions, commonOptions);
   Array.prototype.push.apply(devOptions, commonOptions);
 
-  console.log(process.env.NODE_ENV === 'production' ? prodOptions : devOptions);
+  console.log(process.env.NODE_ENV === 'development' ? devOptions: prodOptions);
 
-  return process.env.NODE_ENV === 'production' ? prodOptions : devOptions;
+  return process.env.NODE_ENV === 'development' ? devOptions : prodOptions;
 };
 const chromeOptions = ({ proxy }) => ({
   slowMo: 50,
-  headless: process.env.NODE_ENV === 'production' ? true : false,
+  headless: process.env.NODE_ENV === 'development' ? false : true,
   defaultViewport: null,
   args: argsChromeOptions({ proxy }),
 });
