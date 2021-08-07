@@ -7,7 +7,9 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
+import { MovieEntity } from '../movie/movie.entity';
 
 @Entity('category')
 export class CategoryEntity extends BaseEntity {
@@ -22,6 +24,8 @@ export class CategoryEntity extends BaseEntity {
   updated_at: Date;
   @OneToMany((type) => CategoryLinkEntity, (categoryLink) => categoryLink.category)
   categoryLinks: CategoryLinkEntity[];
+  @ManyToMany(type => MovieEntity, movie => movie.categories)
+  movies: MovieEntity[]; 
 }
 
 @Entity('category-link')

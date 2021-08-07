@@ -5,6 +5,7 @@
 type Category {
   categoryLinks: CategoryLink!
   id: String!
+  movies: Movie!
   name: String!
   type: String!
 }
@@ -283,6 +284,7 @@ type JobsRegisterResult {
 }
 
 type Movie {
+  categories: Category!
   description: String!
   id: Int!
   movieParts: MoviePart!
@@ -628,10 +630,12 @@ type Mutation {
   deleteOneMovieLink(input: DeleteOneMovieLinkInput!): MovieLinkDeleteResponse!
   deleteOneMoviePart(input: DeleteOneMoviePartInput!): MoviePartDeleteResponse!
   deleteOneMovieServer(input: DeleteOneMovieServerInput!): MovieServerDeleteResponse!
+  setCategoriesOnMovie(input: SetCategoriesOnMovieInput!): Movie!
   setCategoryLinksOnCategory(input: SetCategoryLinksOnCategoryInput!): Category!
   setMovieLinksOnMovieServer(input: SetMovieLinksOnMovieServerInput!): MovieServer!
   setMoviePartsOnMovie(input: SetMoviePartsOnMovieInput!): Movie!
   setMovieServersOnMoviePart(input: SetMovieServersOnMoviePartInput!): MoviePart!
+  setMoviesOnCategory(input: SetMoviesOnCategoryInput!): Category!
   updateManyCategories(input: UpdateManyCategoriesInput!): UpdateManyResponse!
   updateManyMovieLinks(input: UpdateManyMovieLinksInput!): UpdateManyResponse!
   updateManyMovieParts(input: UpdateManyMoviePartsInput!): UpdateManyResponse!
@@ -732,6 +736,14 @@ type Query {
   ): MovieConnection!
 }
 
+input SetCategoriesOnMovieInput {
+  """The id of the record."""
+  id: Int!
+
+  """The id of relation."""
+  relationId: String!
+}
+
 input SetCategoryLinksOnCategoryInput {
   """The id of the record."""
   id: String!
@@ -759,6 +771,14 @@ input SetMoviePartsOnMovieInput {
 input SetMovieServersOnMoviePartInput {
   """The id of the record."""
   id: Int!
+
+  """The id of relation."""
+  relationId: Int!
+}
+
+input SetMoviesOnCategoryInput {
+  """The id of the record."""
+  id: String!
 
   """The id of relation."""
   relationId: Int!

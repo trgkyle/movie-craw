@@ -1,8 +1,10 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { FilterableField, IDField, Relation } from '@nestjs-query/query-graphql';
+import { Movie } from '../movie/movie.schema';
 
 @ObjectType()
 @Relation('categoryLinks', () => CategoryLink, { disableRemove: true })
+@Relation('movies', () => Movie, { disableRemove: true })
 export class Category {
   @IDField((type) => String)
   id: String;
