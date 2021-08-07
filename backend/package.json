@@ -7,8 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "./node_modules/typescript/bin/tsc -p tsconfig.build.json",
+    "tsc": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "PORT=3333 nest start --watch",
     "start:dev": "nest start --watch",
@@ -44,7 +44,6 @@
     "graphql-tools": "^7.0.2",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
-    "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
