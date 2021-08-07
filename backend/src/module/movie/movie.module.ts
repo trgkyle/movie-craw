@@ -12,9 +12,11 @@ import {
 import { MovieFunction } from './movie.function';
 
 import { Movie, MovieLink, MoviePart, MovieServer } from './movie.schema';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
   imports: [
+    CategoryModule,
     TypeOrmModule.forFeature([MovieEntity]),
     TypeOrmModule.forFeature([MoviePartEntity]),
     TypeOrmModule.forFeature([MovieServerEntity]),

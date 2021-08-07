@@ -20,7 +20,7 @@ export class JobsFunction {
   public async checkAndRunsJob() {
     if (this.isRunJob) return;
     this.isRunJob = true;
-    const jobs = await this.jobsRepository.find({ status: false });
+    const jobs = await this.jobsRepository.find({ status: true });
     console.log(jobs);
     for (const job of jobs) {
       job.status = true;
@@ -29,19 +29,30 @@ export class JobsFunction {
       try {
         // Run job
         switch (jobType) {
+          case JOB_TYPE.PHIMMOI_FILM_DETAIL:
+            // const categoriesList = await this.categoryFunction.getAllCategories();
+            // for(const category of categoriesList) {
+            //   for(const categoryLink of category.categoryLinks) {
+            //     const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
+            //     // console.log(filmList);
+            //     // Film Detail
+            //     for(const film of filmList) {
+            //       console.log(film);
+            //       const movie = await this.phimmoiService.getFilmDetail(film);
+            //       const movieLink = await this.phimmoiService.getFilmVideoLink(film);
+            //       await this.movieFunction.createNewMovie(category,movie.title, movie.description, movie.poster, 'phimmoi', movieLink.server, movieLink.link);
+            //     }
+            //   }
+            // }
+            break;
           case JOB_TYPE.PHIMMOI_FILM_LIST:
-            const categoriesLink = await this.categoryFunction.getAllCategories();
-            for(const category of categoriesLink) {
+            const categoriesList = await this.categoryFunction.getAllCategories();
+            console.log("list",categoriesList);
+            for(const category of categoriesList) {
               for(const categoryLink of category.categoryLinks) {
                 const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
-                // console.log(filmList);
-                // Film Detail
                 for(const film of filmList) {
-                  console.log(film);
-                  const movie = await this.phimmoiService.getFilmDetail(film);
-                  const movieLink = await this.phimmoiService.getFilmVideoLink(film);
-                  console.log(movieLink);
-                  await this.movieFunction.createNewMovie(movie.title, movie.description, movie.poster, 'phimmoi', movieLink.server, movieLink.link);
+                  await this.movieFunction.createNewMovieLink(film);
                 }
               }
             }

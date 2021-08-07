@@ -45,8 +45,8 @@ export class PhimmoiService {
         browser,
       });
       try {
-        const firmDetail = await getFilmLink(phimmoiPage);
-        return firmDetail;
+        const firmLink = await getFilmLink(phimmoiPage);
+        return firmLink;
       } catch (e) {
         this.logger.log('ERROR PHIMMOI PAGE');
         return null;

@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { CategoryEntity } from '../category/category.entity';
 
 /*
     - Movie
@@ -40,9 +41,18 @@ export class MovieFunction {
     private movieServerRepository: Repository<MovieServerEntity>,
     @InjectRepository(MovieLinkEntity)
     private movieLinkRepository: Repository<MovieLinkEntity>,
+    @InjectRepository(CategoryEntity)
+    private categoryRepository: Repository<CategoryEntity>,
   ) {}
-
+  public async createNewMovieLink(providerLink: string): Promise<any> {
+    const newMovieLink = new MovieLinkEntity();
+    newMovieLink.providerLink = providerLink;
+    const movieLink = await this.movieLinkRepository.findOne({ providerLink });
+    if(movieLink) return;
+    await this.movieLinkRepository.save(newMovieLink);
+  }
   public async createNewMovie(
+    category,
     name,
     description,
     poster,
@@ -53,6 +63,7 @@ export class MovieFunction {
     const movie = await this.checkMovieExist(name);
     if (!movie) {
       const newMovie = new MovieEntity();
+      newMovie.categories = [category];
       newMovie.name = name;
       newMovie.description = description;
       newMovie.poster = poster;

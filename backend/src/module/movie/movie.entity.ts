@@ -64,9 +64,9 @@ export class MovieServerEntity extends BaseEntity {
 export class MovieLinkEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column() name: string;
+  @Column({ nullable: true}) name: string;
   @Column() providerLink: string;
-  @Column() videoLink: string;
+  @Column({ nullable: true}) videoLink: string;
   @CreateDateColumn()
   created_at: Date;
   @UpdateDateColumn()

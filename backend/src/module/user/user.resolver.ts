@@ -16,7 +16,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { UseGuards } from '@nestjs/common';
 import { AuthenService } from '../authen/authen.service';
 import { CurrentUser, GqlAuthGuard } from '../authen/gql-auth.guard';
-import { UserInfo } from '../common/user.type';
 
 @Resolver()
 export class UserResolver {
@@ -24,16 +23,6 @@ export class UserResolver {
     private userService: UserFunction,
     private authenService: AuthenService,
   ) {}
-
-  @UseGuards(GqlAuthGuard)
-  @Query((returns) => UserInfoResult)
-  async userInfo(@CurrentUser() user: UserInfo) {
-    try {
-      return user;
-    } catch (e) {
-      throw e;
-    }
-  }
 
   @Mutation((returns) => UserRegisterResult)
   async register(

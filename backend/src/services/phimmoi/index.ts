@@ -17,16 +17,27 @@ export async function getCategories(page: puppeteer.Page): Promise<Array<any>> {
 }
 export async function getFilmLink(page: puppeteer.Page): Promise<Array<any>> {
   try {
-    const categories = [];
+    const firmLink = [];
     await page.waitForSelector('.movie-item > a');
     const aHref = await page.$$('.movie-item > a');
     for (const a of aHref) {
       const href = await page.evaluate((element) => element.href, a);
-      categories.push(href);
+      firmLink.push(href);
     }
-    return categories;
+    await page.waitForSelector('ul > ul.pagination.pagination-lg > li');
+    const aActive = await page.$('ul > ul.pagination.pagination-lg > li > a.active');
+    const aText = await page.evaluate((element) => element.textContent, aActive);
+    const linkHandlers = await page.$x(`//a[contains(text(), '${+aText + 1}')]`);
+    if (linkHandlers.length > 0) {
+      await linkHandlers[0].click();
+      await page.waitForNavigation();
+      return firmLink.concat(await getFilmLink(page));
+    } else {
+      return [];
+    }
   } catch (e) {
     console.log(e);
+    return [];
   }
   return null;
 }
