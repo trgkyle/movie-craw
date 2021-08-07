@@ -4,6 +4,7 @@
   "description": "run dev frontend: yarn start backend: yarn start:dev",
   "main": "index.js",
   "scripts": {
+    "postinstall": "tsc --sourceMap false",
     "preinstall": "npm --prefix backend install",
     "backend:prod": "PORT=443 npm --prefix backend run start:prod",
     "build": "npm --prefix backend run build",
