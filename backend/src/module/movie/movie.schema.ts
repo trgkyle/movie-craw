@@ -1,4 +1,4 @@
-import { IDField, Relation } from '@nestjs-query/query-graphql';
+import { FilterableField, IDField, Relation } from '@nestjs-query/query-graphql';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Category } from '../category/category.schema';
 
@@ -8,7 +8,7 @@ import { Category } from '../category/category.schema';
 export class Movie {
   @IDField((type) => Int)
   id: number;
-  @Field((type) => String)
+  @FilterableField((type) => String)
   name: String;
   @Field((type) => String)
   description: String;
