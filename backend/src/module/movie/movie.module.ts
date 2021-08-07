@@ -1,4 +1,7 @@
-import { AuthenModule } from '../authen/authen.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { MovieResolver } from './movie.resolver';
 import {
   MovieEntity,
@@ -6,11 +9,8 @@ import {
   MoviePartEntity,
   MovieServerEntity,
 } from './movie.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
 import { MovieFunction } from './movie.function';
-import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
-import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+
 import { Movie, MovieLink, MoviePart, MovieServer } from './movie.schema';
 
 @Module({

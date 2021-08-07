@@ -1,10 +1,10 @@
-import { CategoryResolver } from './category.resolver';
-import { CategoryEntity, CategoryLinkEntity } from './category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { CategoryFunction } from './category.function';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { CategoryResolver } from './category.resolver';
+import { CategoryEntity, CategoryLinkEntity } from './category.entity';
+import { CategoryFunction } from './category.function';
 import { Category } from './category.schema';
 @Module({
   imports: [

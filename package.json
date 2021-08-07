@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/venoftheme/seoupto#readme",
   "engines": {
-    "node": "14.17.x",
-    "npm": "6.14.13"
+    "node": "14.17.2"
   }
 }
