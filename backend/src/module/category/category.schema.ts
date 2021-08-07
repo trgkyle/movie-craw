@@ -1,25 +1,25 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { FilterableField, IDField, Relation } from '@nestjs-query/query-graphql';
+import { FilterableField, FilterableUnPagedRelation, IDField } from '@nestjs-query/query-graphql';
 import { Movie } from '../movie/movie.schema';
 
 @ObjectType()
-@Relation('categoryLinks', () => CategoryLink, { disableRemove: true })
-@Relation('movies', () => Movie, { disableRemove: true })
+@FilterableUnPagedRelation('categoryLinks', () => CategoryLink, { disableRemove: true })
+@FilterableUnPagedRelation('movies', () => Movie, { disableRemove: true })
 export class Category {
-  @IDField((type) => String)
-  id: String;
+  @IDField((type) => Int)
+  id: number;
   @FilterableField((type) => String)
   name: String;
-  @Field((type) => String)
+  @FilterableField((type) => String)
   type: String;
 }
 
 @ObjectType()
 export class CategoryLink {
   @IDField((type) => String)
-  id: String;
-  @Field((type) => String)
+  id: number;
+  @FilterableField((type) => String)
   provider: string;
-  @Field((type) => String)
+  @FilterableField((type) => String)
   link: String;
 }
