@@ -2,15 +2,263 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  categoryLinks: CategoryLink!
+  id: String!
+  name: String!
+  type: String!
+}
+
+type CategoryAggregateGroupBy {
+  id: String
+  name: String
+}
+
+type CategoryConnection {
+  """Array of edges."""
+  edges: [CategoryEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type CategoryCountAggregate {
+  id: Int
+  name: Int
+}
+
+input CategoryDeleteFilter {
+  and: [CategoryDeleteFilter!]
+  id: StringFieldComparison
+  name: StringFieldComparison
+  or: [CategoryDeleteFilter!]
+}
+
+type CategoryDeleteResponse {
+  id: String
+  name: String
+  type: String
+}
+
+type CategoryEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the Category"""
+  node: Category!
+}
+
+input CategoryFilter {
+  and: [CategoryFilter!]
+  id: StringFieldComparison
+  name: StringFieldComparison
+  or: [CategoryFilter!]
+}
+
 type CategoryLink {
+  id: String!
   link: String!
   provider: String!
 }
 
-type CategoryResult {
-  categoryLinks: [CategoryLink!]
-  name: String!
-  type: String!
+type CategoryMaxAggregate {
+  id: String
+  name: String
+}
+
+type CategoryMinAggregate {
+  id: String
+  name: String
+}
+
+input CategorySort {
+  direction: SortDirection!
+  field: CategorySortFields!
+  nulls: SortNulls
+}
+
+enum CategorySortFields {
+  id
+  name
+}
+
+input CategoryUpdateFilter {
+  and: [CategoryUpdateFilter!]
+  id: StringFieldComparison
+  name: StringFieldComparison
+  or: [CategoryUpdateFilter!]
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+input CreateCategory {
+  id: String
+  name: String
+  type: String
+}
+
+input CreateManyCategoriesInput {
+  """Array of records to create"""
+  categories: [CreateCategory!]!
+}
+
+input CreateManyMovieLinksInput {
+  """Array of records to create"""
+  movieLinks: [CreateMovieLink!]!
+}
+
+input CreateManyMoviePartsInput {
+  """Array of records to create"""
+  movieParts: [CreateMoviePart!]!
+}
+
+input CreateManyMovieServersInput {
+  """Array of records to create"""
+  movieServers: [CreateMovieServer!]!
+}
+
+input CreateManyMoviesInput {
+  """Array of records to create"""
+  movies: [CreateMovie!]!
+}
+
+input CreateMovie {
+  description: String
+  id: Int
+  name: String
+  poster: String
+}
+
+input CreateMovieLink {
+  id: Int
+  name: String
+  videoLink: String
+}
+
+input CreateMoviePart {
+  id: Int
+  part: String
+  type: String
+}
+
+input CreateMovieServer {
+  id: Int
+  provider: String
+}
+
+input CreateOneCategoryInput {
+  """The record to create"""
+  category: CreateCategory!
+}
+
+input CreateOneMovieInput {
+  """The record to create"""
+  movie: CreateMovie!
+}
+
+input CreateOneMovieLinkInput {
+  """The record to create"""
+  movieLink: CreateMovieLink!
+}
+
+input CreateOneMoviePartInput {
+  """The record to create"""
+  moviePart: CreateMoviePart!
+}
+
+input CreateOneMovieServerInput {
+  """The record to create"""
+  movieServer: CreateMovieServer!
+}
+
+input CursorPaging {
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input DeleteManyCategoriesInput {
+  """Filter to find records to delete"""
+  filter: CategoryDeleteFilter!
+}
+
+input DeleteManyMovieLinksInput {
+  """Filter to find records to delete"""
+  filter: MovieLinkDeleteFilter!
+}
+
+input DeleteManyMoviePartsInput {
+  """Filter to find records to delete"""
+  filter: MoviePartDeleteFilter!
+}
+
+input DeleteManyMovieServersInput {
+  """Filter to find records to delete"""
+  filter: MovieServerDeleteFilter!
+}
+
+input DeleteManyMoviesInput {
+  """Filter to find records to delete"""
+  filter: MovieDeleteFilter!
+}
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+input DeleteOneCategoryInput {
+  """The id of the record to delete."""
+  id: String!
+}
+
+input DeleteOneMovieInput {
+  """The id of the record to delete."""
+  id: Int!
+}
+
+input DeleteOneMovieLinkInput {
+  """The id of the record to delete."""
+  id: Int!
+}
+
+input DeleteOneMoviePartInput {
+  """The id of the record to delete."""
+  id: Int!
+}
+
+input DeleteOneMovieServerInput {
+  """The id of the record to delete."""
+  id: Int!
+}
+
+input IntFieldComparison {
+  between: IntFieldComparisonBetween
+  eq: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  is: Boolean
+  isNot: Boolean
+  lt: Int
+  lte: Int
+  neq: Int
+  notBetween: IntFieldComparisonBetween
+  notIn: [Int!]
+}
+
+input IntFieldComparisonBetween {
+  lower: Int!
+  upper: Int!
 }
 
 type JobData {
@@ -34,38 +282,628 @@ type JobsRegisterResult {
   status: Boolean!
 }
 
-type MovieInfoResult {
+type Movie {
   description: String!
   id: Int!
-  movieParts: [MoviePart!]
+  movieParts: MoviePart!
   name: String!
   poster: String!
 }
 
+type MovieAggregateGroupBy {
+  id: Int
+}
+
+type MovieAvgAggregate {
+  id: Float
+}
+
+type MovieConnection {
+  """Array of edges."""
+  edges: [MovieEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type MovieCountAggregate {
+  id: Int
+}
+
+input MovieDeleteFilter {
+  and: [MovieDeleteFilter!]
+  id: IntFieldComparison
+  or: [MovieDeleteFilter!]
+}
+
+type MovieDeleteResponse {
+  description: String
+  id: Int
+  name: String
+  poster: String
+}
+
+type MovieEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the Movie"""
+  node: Movie!
+}
+
+input MovieFilter {
+  and: [MovieFilter!]
+  id: IntFieldComparison
+  or: [MovieFilter!]
+}
+
 type MovieLink {
+  id: Int!
   name: String!
   videoLink: String!
 }
 
+type MovieLinkAggregateGroupBy {
+  id: Int
+}
+
+type MovieLinkAvgAggregate {
+  id: Float
+}
+
+type MovieLinkConnection {
+  """Array of edges."""
+  edges: [MovieLinkEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type MovieLinkCountAggregate {
+  id: Int
+}
+
+input MovieLinkDeleteFilter {
+  and: [MovieLinkDeleteFilter!]
+  id: IntFieldComparison
+  or: [MovieLinkDeleteFilter!]
+}
+
+type MovieLinkDeleteResponse {
+  id: Int
+  name: String
+  videoLink: String
+}
+
+type MovieLinkEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the MovieLink"""
+  node: MovieLink!
+}
+
+input MovieLinkFilter {
+  and: [MovieLinkFilter!]
+  id: IntFieldComparison
+  or: [MovieLinkFilter!]
+}
+
+type MovieLinkMaxAggregate {
+  id: Int
+}
+
+type MovieLinkMinAggregate {
+  id: Int
+}
+
+input MovieLinkSort {
+  direction: SortDirection!
+  field: MovieLinkSortFields!
+  nulls: SortNulls
+}
+
+enum MovieLinkSortFields {
+  id
+}
+
+type MovieLinkSumAggregate {
+  id: Float
+}
+
+input MovieLinkUpdateFilter {
+  and: [MovieLinkUpdateFilter!]
+  id: IntFieldComparison
+  or: [MovieLinkUpdateFilter!]
+}
+
+type MovieMaxAggregate {
+  id: Int
+}
+
+type MovieMinAggregate {
+  id: Int
+}
+
 type MoviePart {
-  movieServers: [MovieServer!]
+  id: Int!
+  movieServers: MovieServer!
   part: String!
   type: String!
 }
 
+type MoviePartAggregateGroupBy {
+  id: Int
+}
+
+type MoviePartAvgAggregate {
+  id: Float
+}
+
+type MoviePartConnection {
+  """Array of edges."""
+  edges: [MoviePartEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type MoviePartCountAggregate {
+  id: Int
+}
+
+input MoviePartDeleteFilter {
+  and: [MoviePartDeleteFilter!]
+  id: IntFieldComparison
+  or: [MoviePartDeleteFilter!]
+}
+
+type MoviePartDeleteResponse {
+  id: Int
+  part: String
+  type: String
+}
+
+type MoviePartEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the MoviePart"""
+  node: MoviePart!
+}
+
+input MoviePartFilter {
+  and: [MoviePartFilter!]
+  id: IntFieldComparison
+  or: [MoviePartFilter!]
+}
+
+type MoviePartMaxAggregate {
+  id: Int
+}
+
+type MoviePartMinAggregate {
+  id: Int
+}
+
+input MoviePartSort {
+  direction: SortDirection!
+  field: MoviePartSortFields!
+  nulls: SortNulls
+}
+
+enum MoviePartSortFields {
+  id
+}
+
+type MoviePartSumAggregate {
+  id: Float
+}
+
+input MoviePartUpdateFilter {
+  and: [MoviePartUpdateFilter!]
+  id: IntFieldComparison
+  or: [MoviePartUpdateFilter!]
+}
+
 type MovieServer {
-  movieLinks: [MovieLink!]
+  id: Int!
+  movieLinks: MovieLink!
   provider: String!
+}
+
+type MovieServerAggregateGroupBy {
+  id: Int
+}
+
+type MovieServerAvgAggregate {
+  id: Float
+}
+
+type MovieServerConnection {
+  """Array of edges."""
+  edges: [MovieServerEdge!]!
+
+  """Paging information"""
+  pageInfo: PageInfo!
+}
+
+type MovieServerCountAggregate {
+  id: Int
+}
+
+input MovieServerDeleteFilter {
+  and: [MovieServerDeleteFilter!]
+  id: IntFieldComparison
+  or: [MovieServerDeleteFilter!]
+}
+
+type MovieServerDeleteResponse {
+  id: Int
+  provider: String
+}
+
+type MovieServerEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the MovieServer"""
+  node: MovieServer!
+}
+
+input MovieServerFilter {
+  and: [MovieServerFilter!]
+  id: IntFieldComparison
+  or: [MovieServerFilter!]
+}
+
+type MovieServerMaxAggregate {
+  id: Int
+}
+
+type MovieServerMinAggregate {
+  id: Int
+}
+
+input MovieServerSort {
+  direction: SortDirection!
+  field: MovieServerSortFields!
+  nulls: SortNulls
+}
+
+enum MovieServerSortFields {
+  id
+}
+
+type MovieServerSumAggregate {
+  id: Float
+}
+
+input MovieServerUpdateFilter {
+  and: [MovieServerUpdateFilter!]
+  id: IntFieldComparison
+  or: [MovieServerUpdateFilter!]
+}
+
+input MovieSort {
+  direction: SortDirection!
+  field: MovieSortFields!
+  nulls: SortNulls
+}
+
+enum MovieSortFields {
+  id
+}
+
+type MovieSumAggregate {
+  id: Float
+}
+
+input MovieUpdateFilter {
+  and: [MovieUpdateFilter!]
+  id: IntFieldComparison
+  or: [MovieUpdateFilter!]
 }
 
 type Mutation {
   addJob(name: String!): JobsRegisterResult!
+  createManyCategories(input: CreateManyCategoriesInput!): [Category!]!
+  createManyMovieLinks(input: CreateManyMovieLinksInput!): [MovieLink!]!
+  createManyMovieParts(input: CreateManyMoviePartsInput!): [MoviePart!]!
+  createManyMovieServers(input: CreateManyMovieServersInput!): [MovieServer!]!
+  createManyMovies(input: CreateManyMoviesInput!): [Movie!]!
+  createOneCategory(input: CreateOneCategoryInput!): Category!
+  createOneMovie(input: CreateOneMovieInput!): Movie!
+  createOneMovieLink(input: CreateOneMovieLinkInput!): MovieLink!
+  createOneMoviePart(input: CreateOneMoviePartInput!): MoviePart!
+  createOneMovieServer(input: CreateOneMovieServerInput!): MovieServer!
   deleteJob(id: [String!]!): JobsDeleteResult!
+  deleteManyCategories(input: DeleteManyCategoriesInput!): DeleteManyResponse!
+  deleteManyMovieLinks(input: DeleteManyMovieLinksInput!): DeleteManyResponse!
+  deleteManyMovieParts(input: DeleteManyMoviePartsInput!): DeleteManyResponse!
+  deleteManyMovieServers(input: DeleteManyMovieServersInput!): DeleteManyResponse!
+  deleteManyMovies(input: DeleteManyMoviesInput!): DeleteManyResponse!
+  deleteOneCategory(input: DeleteOneCategoryInput!): CategoryDeleteResponse!
+  deleteOneMovie(input: DeleteOneMovieInput!): MovieDeleteResponse!
+  deleteOneMovieLink(input: DeleteOneMovieLinkInput!): MovieLinkDeleteResponse!
+  deleteOneMoviePart(input: DeleteOneMoviePartInput!): MoviePartDeleteResponse!
+  deleteOneMovieServer(input: DeleteOneMovieServerInput!): MovieServerDeleteResponse!
+  setCategoryLinksOnCategory(input: SetCategoryLinksOnCategoryInput!): Category!
+  setMovieLinksOnMovieServer(input: SetMovieLinksOnMovieServerInput!): MovieServer!
+  setMoviePartsOnMovie(input: SetMoviePartsOnMovieInput!): Movie!
+  setMovieServersOnMoviePart(input: SetMovieServersOnMoviePartInput!): MoviePart!
+  updateManyCategories(input: UpdateManyCategoriesInput!): UpdateManyResponse!
+  updateManyMovieLinks(input: UpdateManyMovieLinksInput!): UpdateManyResponse!
+  updateManyMovieParts(input: UpdateManyMoviePartsInput!): UpdateManyResponse!
+  updateManyMovieServers(input: UpdateManyMovieServersInput!): UpdateManyResponse!
+  updateManyMovies(input: UpdateManyMoviesInput!): UpdateManyResponse!
+  updateOneCategory(input: UpdateOneCategoryInput!): Category!
+  updateOneMovie(input: UpdateOneMovieInput!): Movie!
+  updateOneMovieLink(input: UpdateOneMovieLinkInput!): MovieLink!
+  updateOneMoviePart(input: UpdateOneMoviePartInput!): MoviePart!
+  updateOneMovieServer(input: UpdateOneMovieServerInput!): MovieServer!
+}
+
+type PageInfo {
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
 }
 
 type Query {
-  getCategoryList(name: String): [CategoryResult!]!
+  categories(
+    """Specify to filter the records returned."""
+    filter: CategoryFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [CategorySort!] = []
+  ): CategoryConnection!
+  category(
+    """The id of the record to find."""
+    id: String!
+  ): Category
   getJobs: [JobsListResult!]!
-  getMovieById(id: Float!): MovieInfoResult!
-  getMovieList(name: String): [MovieInfoResult!]!
+  movie(
+    """The id of the record to find."""
+    id: Int!
+  ): Movie
+  movieLink(
+    """The id of the record to find."""
+    id: Int!
+  ): MovieLink
+  movieLinks(
+    """Specify to filter the records returned."""
+    filter: MovieLinkFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [MovieLinkSort!] = []
+  ): MovieLinkConnection!
+  moviePart(
+    """The id of the record to find."""
+    id: Int!
+  ): MoviePart
+  movieParts(
+    """Specify to filter the records returned."""
+    filter: MoviePartFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [MoviePartSort!] = []
+  ): MoviePartConnection!
+  movieServer(
+    """The id of the record to find."""
+    id: Int!
+  ): MovieServer
+  movieServers(
+    """Specify to filter the records returned."""
+    filter: MovieServerFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [MovieServerSort!] = []
+  ): MovieServerConnection!
+  movies(
+    """Specify to filter the records returned."""
+    filter: MovieFilter = {}
+
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to sort results."""
+    sorting: [MovieSort!] = []
+  ): MovieConnection!
+}
+
+input SetCategoryLinksOnCategoryInput {
+  """The id of the record."""
+  id: String!
+
+  """The id of relation."""
+  relationId: String!
+}
+
+input SetMovieLinksOnMovieServerInput {
+  """The id of the record."""
+  id: Int!
+
+  """The id of relation."""
+  relationId: Int!
+}
+
+input SetMoviePartsOnMovieInput {
+  """The id of the record."""
+  id: Int!
+
+  """The id of relation."""
+  relationId: Int!
+}
+
+input SetMovieServersOnMoviePartInput {
+  """The id of the record."""
+  id: Int!
+
+  """The id of relation."""
+  relationId: Int!
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input StringFieldComparison {
+  eq: String
+  gt: String
+  gte: String
+  iLike: String
+  in: [String!]
+  is: Boolean
+  isNot: Boolean
+  like: String
+  lt: String
+  lte: String
+  neq: String
+  notILike: String
+  notIn: [String!]
+  notLike: String
+}
+
+input UpdateCategory {
+  id: String
+  name: String
+  type: String
+}
+
+input UpdateManyCategoriesInput {
+  """Filter used to find fields to update"""
+  filter: CategoryUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateCategory!
+}
+
+input UpdateManyMovieLinksInput {
+  """Filter used to find fields to update"""
+  filter: MovieLinkUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateMovieLink!
+}
+
+input UpdateManyMoviePartsInput {
+  """Filter used to find fields to update"""
+  filter: MoviePartUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateMoviePart!
+}
+
+input UpdateManyMovieServersInput {
+  """Filter used to find fields to update"""
+  filter: MovieServerUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateMovieServer!
+}
+
+input UpdateManyMoviesInput {
+  """Filter used to find fields to update"""
+  filter: MovieUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateMovie!
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+input UpdateMovie {
+  description: String
+  id: Int
+  name: String
+  poster: String
+}
+
+input UpdateMovieLink {
+  id: Int
+  name: String
+  videoLink: String
+}
+
+input UpdateMoviePart {
+  id: Int
+  part: String
+  type: String
+}
+
+input UpdateMovieServer {
+  id: Int
+  provider: String
+}
+
+input UpdateOneCategoryInput {
+  """The id of the record to update"""
+  id: String!
+
+  """The update to apply."""
+  update: UpdateCategory!
+}
+
+input UpdateOneMovieInput {
+  """The id of the record to update"""
+  id: Int!
+
+  """The update to apply."""
+  update: UpdateMovie!
+}
+
+input UpdateOneMovieLinkInput {
+  """The id of the record to update"""
+  id: Int!
+
+  """The update to apply."""
+  update: UpdateMovieLink!
+}
+
+input UpdateOneMoviePartInput {
+  """The id of the record to update"""
+  id: Int!
+
+  """The update to apply."""
+  update: UpdateMoviePart!
+}
+
+input UpdateOneMovieServerInput {
+  """The id of the record to update"""
+  id: Int!
+
+  """The update to apply."""
+  update: UpdateMovieServer!
 }

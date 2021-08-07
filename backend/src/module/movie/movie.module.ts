@@ -9,6 +9,9 @@ import {
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { MovieFunction } from './movie.function';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { Movie, MovieLink, MoviePart, MovieServer } from './movie.schema';
 
 @Module({
   imports: [
@@ -16,6 +19,20 @@ import { MovieFunction } from './movie.function';
     TypeOrmModule.forFeature([MoviePartEntity]),
     TypeOrmModule.forFeature([MovieServerEntity]),
     TypeOrmModule.forFeature([MovieLinkEntity]),
+    NestjsQueryGraphQLModule.forFeature({
+      imports: [
+        NestjsQueryTypeOrmModule.forFeature([MovieEntity]),
+        NestjsQueryTypeOrmModule.forFeature([MoviePartEntity]),
+        NestjsQueryTypeOrmModule.forFeature([MovieServerEntity]),
+        NestjsQueryTypeOrmModule.forFeature([MovieLinkEntity]),
+      ],
+      resolvers: [
+        { DTOClass: Movie, EntityClass: MovieEntity },
+        { DTOClass: MoviePart, EntityClass: MoviePartEntity },
+        { DTOClass: MovieServer, EntityClass: MovieServerEntity },
+        { DTOClass: MovieLink, EntityClass: MovieLinkEntity },
+      ],
+    }),
   ],
   providers: [MovieResolver, MovieFunction],
   exports: [
