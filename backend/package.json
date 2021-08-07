@@ -6,10 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npm run build",
+    "postinstall": "npm run tsc",
     "prebuild": "rimraf dist",
     "tsc": "tsc -p tsconfig.build.json",
-    "build": "jest",
+    "build": "",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "PORT=3333 nest start --watch",
     "start:dev": "nest start --watch",
