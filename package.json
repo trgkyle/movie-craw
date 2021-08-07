@@ -1,11 +1,9 @@
 {
   "name": "movie-crawl",
   "version": "1.0.0",
-  "description": "run dev frontend: yarn start backend: yarn start:dev",
+  "description": "Movie craw",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
-    "postinstall": "npm run tsc",
     "preinstall": "npm --prefix backend install",
     "backend:prod": "PORT=443 npm --prefix backend run start:prod",
     "build": "npm --prefix backend run build",
