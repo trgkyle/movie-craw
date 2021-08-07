@@ -6,8 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "tsc": "tsc",
-    "postinstall": "npm run tsc",
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
