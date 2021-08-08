@@ -1,4 +1,4 @@
-version: "3"
+version: "2.3"
 services:
   # db:
   #   restart: always
@@ -12,14 +12,13 @@ services:
   #   ports:
   #     - "5433:5432"
   backend:
-    container_name: hello-world
     build:
         context: .
-        target: production
         dockerfile: ./Dockerfile
     command: bash -c "npm run build && npm run start:temp"
     ports:
         - 3333:3001
+        - 3334:3333
     volumes:
         - .:/usr/src/app
         - /usr/src/app/node_modules
@@ -28,6 +27,3 @@ services:
           limits:
             cpus: 0.50
             memory: 3000M
-          reservations:
-            cpus: 0.25
-            memory: 128M
