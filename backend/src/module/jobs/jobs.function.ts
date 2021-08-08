@@ -19,7 +19,7 @@ export class JobsFunction {
   ) {}
   private isRunJob: Boolean;
   public async checkAndRunsJob() {
-    const limit = pLimit(1);
+    const limit = pLimit(2);
     if (this.isRunJob) return;
     this.isRunJob = true;
     const jobs = await this.jobsRepository.find({ status: false });
@@ -69,38 +69,29 @@ export class JobsFunction {
             );
             await Promise.all(filmLinkList);
             break;
-            // for(const category of categoriesList) {
-            //   for(const categoryLink of category.categoryLinks) {
-            //     const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
-            //     // console.log(filmList);
-            //     // Film Detail
-            //     for(const film of filmList) {
-            //       console.log(film);
-            //       const movie = await this.phimmoiService.getFilmDetail(film);
-            //       const movieLink = await this.phimmoiService.getFilmVideoLink(film);
-            //       await this.movieFunction.createNewMovie(category,movie.title, movie.description, movie.poster, 'phimmoi', movieLink.server, movieLink.link);
-            //     }
-            //   }
-            // }
-            break;
           case JOB_TYPE.PHIMMOI_FILM_LIST:
-            const categoriesList = await this.categoryFunction.getAllCategories();
+            const categoriesList = await this.categoryFunction.getAllCategoriesByProvider(
+              'phimmoi',
+            );
             console.log('list', categoriesList);
-            for (const category of categoriesList) {
-              for (const categoryLink of category.categoryLinks) {
-                const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(
-                  categoryLink.link,
-                );
-                for (const film of filmList) {
-                  await this.movieFunction.createNewMovieLink(film);
+            const categoriesHandle = categoriesList.map(async (category) =>
+              limit(async () => {
+                // each category have many link cawl
+                for (const categoryLink of category.categoryLinks) {
+                  const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(
+                    categoryLink.link,
+                  );
+                  for (const film of filmList) {
+                    await this.movieFunction.createNewMovieLink(film);
+                  }
                 }
-              }
-            }
+              }),
+            );
+            await Promise.all(categoriesHandle);
             break;
           case JOB_TYPE.PHIMMOI_CATEGORY_LIST:
             const categoriesLinks = await this.phimmoiService.getPhimmoiCategoires();
             for (const categoryLink of categoriesLinks) {
-              console.log(categoryLink);
               await this.categoryFunction.createNewCategory(
                 categoryLink.text,
                 '',
@@ -108,15 +99,6 @@ export class JobsFunction {
                 categoryLink.href,
               );
             }
-            // await Promise.all(
-            //   categoriesLink.map(async (category) => {
-            //     return
-            //     // console.log(category);
-            //     // const FilmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(category);
-            //     // linkFilmByCategoriesGroup.push({ category, FilmList });
-            //   }),
-            // );
-            console.log('DO Film PHIMMOI CRAWL');
             break;
         }
         // End run job

@@ -80,6 +80,14 @@ export class CategoryFunction {
       .getMany(); 
     return category;
   }
+  public async getAllCategoriesByProvider(provider): Promise<any> {
+    const category = await this.categoryRepository
+      .createQueryBuilder('category')
+      .leftJoinAndSelect('category.categoryLinks', 'category-link')
+      .where('category-link.provider = :provider', { provider })
+      .getMany(); 
+    return category;
+  }
   public async getCategoryById(id: Number): Promise<any> {
     const movie = await this.categoryRepository
       .createQueryBuilder('category')
