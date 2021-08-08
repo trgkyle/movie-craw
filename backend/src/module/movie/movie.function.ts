@@ -48,10 +48,14 @@ export class MovieFunction {
     const newMovieLink = new MovieLinkEntity();
     newMovieLink.providerLink = providerLink;
     const movieLink = await this.movieLinkRepository.findOne({ providerLink });
-    if(movieLink) return;
+    if (movieLink) return;
     await this.movieLinkRepository.save(newMovieLink);
   }
-  public async createNewMovie(
+  public async getMovieLinkNotCrawlDetailYet(): Promise<Array<any>> {
+    const movieLink = await this.movieLinkRepository.find({ videoLink: null });
+    return movieLink;
+  }
+  public async createNewMovie({
     category,
     name,
     description,
@@ -59,11 +63,11 @@ export class MovieFunction {
     provider,
     server,
     link,
-  ): Promise<Boolean> {
+  }): Promise<Boolean> {
     const movie = await this.checkMovieExist(name);
     if (!movie) {
       const newMovie = new MovieEntity();
-      newMovie.categories = [category];
+      newMovie.categories = category;
       newMovie.name = name;
       newMovie.description = description;
       newMovie.poster = poster;
@@ -72,7 +76,7 @@ export class MovieFunction {
       newMoviePart.part = 'FULL';
       const newMovieServer = new MovieServerEntity();
       newMovieServer.provider = provider;
-      const newMovieLink = new MovieLinkEntity();
+      const newMovieLink = await this.movieLinkRepository.findOne({ providerLink: link });
       newMovieLink.name = server;
       newMovieLink.providerLink = '';
       newMovieLink.videoLink = link;
@@ -86,6 +90,7 @@ export class MovieFunction {
       await this.movieRepository.save(newMovie);
       return true;
     } else {
+      console.log('Movie exist');
       // const categoryLink = await this.checkCategoryLinkExist(provider, link);
       // if (!categoryLink) {
       //   const newCategoryLink = new CategoryLinkEntity();

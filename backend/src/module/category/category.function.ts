@@ -88,4 +88,12 @@ export class CategoryFunction {
       .getOne();
     return movie;
   }
+  public async getCategoryByName(name: String): Promise<any> {
+    const movie = await this.categoryRepository
+      .createQueryBuilder('category')
+      .where('category.name = :name', { name })
+      .leftJoinAndSelect('category.categoryLinks', 'category-link')
+      .getOne();
+    return movie;
+  }
 }

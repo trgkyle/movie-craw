@@ -14,6 +14,7 @@ export class CronService {
     try {
       await this.jobCronFucntion.checkAndRunsJob();
     } catch (e) {
+      console.log(e);
       console.log('Error in handle facebook reaction post');
     }
   }

@@ -43,7 +43,7 @@ export async function getFilmLink(page: puppeteer.Page): Promise<Array<any>> {
 }
 export async function getFilmDetailInfo(
   page: puppeteer.Page,
-): Promise<{ title: String; description: String; poster: String }> {
+): Promise<{ title: String; description: String; poster: String, categories: Array<any> }> {
   try {
     await page.waitForSelector('a.title-1');
     await page.waitForSelector('#film-content > p');
@@ -57,7 +57,14 @@ export async function getFilmDetailInfo(
     );
     const img = await page.$('.movie-image img');
     const poster = await page.evaluate((element) => element.src, img);
-    return { title, description, poster };
+    
+    const categoryesTag = await page.$$('.movie-dd.dd-cat > a');
+    const categories = await Promise.all(categoryesTag.map(async (element) => {
+      const text = await page.evaluate((element) => element.textContent, element);
+      const href = await page.evaluate((element) => element.href, element);
+      return { text, href };
+    }));
+    return { title, description, poster, categories };
   } catch (e) {
     console.log(e);
   }
@@ -69,9 +76,9 @@ export async function startWatchFilm(
   try {
     await page.waitForSelector('#btn-film-watch');
     await page.click('#btn-film-watch');
-    await page.waitForNavigation();
+    await page.waitForNavigation({timeout: 7000});
   } catch (e) {
-    console.log(e);
+    
   }
   return null;
 }

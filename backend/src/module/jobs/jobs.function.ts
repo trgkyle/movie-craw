@@ -2,6 +2,7 @@ import { JobsEntity } from './jobs.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import * as pLimit from 'p-limit';
 import { JOB_TYPE } from './jobs.constant';
 import { MovieFunction } from '../movie/movie.function';
 import { PhimmoiService } from '../../services/phimmoi/phimmoi.service';
@@ -18,9 +19,10 @@ export class JobsFunction {
   ) {}
   private isRunJob: Boolean;
   public async checkAndRunsJob() {
+    const limit = pLimit(1);
     if (this.isRunJob) return;
     this.isRunJob = true;
-    const jobs = await this.jobsRepository.find({ status: true });
+    const jobs = await this.jobsRepository.find({ status: false });
     console.log(jobs);
     for (const job of jobs) {
       job.status = true;
@@ -30,7 +32,42 @@ export class JobsFunction {
         // Run job
         switch (jobType) {
           case JOB_TYPE.PHIMMOI_FILM_DETAIL:
-            // const categoriesList = await this.categoryFunction.getAllCategories();
+            let filmLinkList = await this.movieFunction.getMovieLinkNotCrawlDetailYet();
+            filmLinkList = filmLinkList.map(async (filmLink) =>
+              limit(async () => {
+                const movie = await this.phimmoiService.getFilmDetail(
+                  filmLink.providerLink,
+                );
+                const categories = [];
+                for (const category of movie.categories) {
+                  await this.categoryFunction.createNewCategory(
+                    category.text,
+                    '',
+                    'phimmoi',
+                    category.href,
+                  );
+                  categories.push(
+                    await this.categoryFunction.getCategoryByName(
+                      category.text,
+                    ),
+                  );
+                }
+                const movieLink = await this.phimmoiService.getFilmVideoLink(
+                  filmLink.providerLink,
+                );
+                await this.movieFunction.createNewMovie({
+                  category: categories,
+                  name: movie.title,
+                  description: movie.description,
+                  poster: movie.poster,
+                  provider: 'phimmoi',
+                  server: movieLink.server,
+                  link: movieLink.link,
+                });
+              }),
+            );
+            await Promise.all(filmLinkList);
+            break;
             // for(const category of categoriesList) {
             //   for(const categoryLink of category.categoryLinks) {
             //     const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
@@ -47,11 +84,13 @@ export class JobsFunction {
             break;
           case JOB_TYPE.PHIMMOI_FILM_LIST:
             const categoriesList = await this.categoryFunction.getAllCategories();
-            console.log("list",categoriesList);
-            for(const category of categoriesList) {
-              for(const categoryLink of category.categoryLinks) {
-                const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(categoryLink.link);
-                for(const film of filmList) {
+            console.log('list', categoriesList);
+            for (const category of categoriesList) {
+              for (const categoryLink of category.categoryLinks) {
+                const filmList = await this.phimmoiService.getPhimmoiFilmListLinkByCategories(
+                  categoryLink.link,
+                );
+                for (const film of filmList) {
                   await this.movieFunction.createNewMovieLink(film);
                 }
               }
@@ -88,10 +127,17 @@ export class JobsFunction {
   }
   public async addJob(type): Promise<any> {
     try {
-      const newJob = new JobsEntity();
-      newJob.job_type = type;
-      newJob.status = false;
-      await this.jobsRepository.save(newJob);
+      const job = await this.jobsRepository.findOne({ job_type: type });
+      if (job) {
+        job.status = false;
+        await this.jobsRepository.save(job);
+        return true;
+      } else {
+        const newJob = new JobsEntity();
+        newJob.job_type = type;
+        newJob.status = false;
+        await this.jobsRepository.save(newJob);
+      }
     } catch (e) {
       return false;
     }

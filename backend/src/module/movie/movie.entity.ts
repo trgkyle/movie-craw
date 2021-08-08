@@ -15,7 +15,7 @@ import { CategoryEntity } from '../category/category.entity';
 export class MovieEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column() name: string;
+  @Column({ unique: true}) name: string;
   @Column() description: string;
   @Column() poster: string;
   @CreateDateColumn()
@@ -65,7 +65,7 @@ export class MovieLinkEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
   @Column({ nullable: true}) name: string;
-  @Column() providerLink: string;
+  @Column({ unique: true}) providerLink: string;
   @Column({ nullable: true}) videoLink: string;
   @CreateDateColumn()
   created_at: Date;

@@ -4,7 +4,7 @@ import { Entity, ObjectID, PrimaryGeneratedColumn, Column, OneToOne, CreateDateC
 export class JobsEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column() job_type: string;
+  @Column({ unique: true}) job_type: string;
   @Column() status: boolean;
   @CreateDateColumn()
   created_at: Date;
