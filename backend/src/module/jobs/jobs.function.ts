@@ -19,7 +19,7 @@ export class JobsFunction {
   ) {}
   private isRunJob: Boolean;
   public async checkAndRunsJob() {
-    const limit = pLimit(2);
+    const limit = pLimit(6);
     if (this.isRunJob) return;
     this.isRunJob = true;
     const jobs = await this.jobsRepository.find({ status: false });
