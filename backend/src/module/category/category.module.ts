@@ -12,7 +12,7 @@ import { Category } from './category.schema';
     TypeOrmModule.forFeature([CategoryLinkEntity]),
     NestjsQueryGraphQLModule.forFeature({
       imports: [
-        NestjsQueryTypeOrmModule.forFeature([CategoryEntity]),
+        NestjsQueryTypeOrmModule.forFeature([CategoryEntity]), 
       ],
       resolvers: [
         { DTOClass: Category, EntityClass: CategoryEntity },

@@ -62,6 +62,7 @@ export class JobsFunction {
                   poster: movie.poster,
                   provider: 'phimmoi',
                   server: movieLink.server,
+                  providerLink: filmLink.providerLink,
                   link: movieLink.link,
                 });
               }),

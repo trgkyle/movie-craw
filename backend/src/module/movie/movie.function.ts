@@ -62,6 +62,7 @@ export class MovieFunction {
     poster,
     provider,
     server,
+    providerLink,
     link,
   }): Promise<Boolean> {
     const movie = await this.checkMovieExist(name);
@@ -76,9 +77,9 @@ export class MovieFunction {
       newMoviePart.part = 'FULL';
       const newMovieServer = new MovieServerEntity();
       newMovieServer.provider = provider;
-      const newMovieLink = await this.movieLinkRepository.findOne({ providerLink: link });
+      const newMovieLink = await this.movieLinkRepository.findOne({ providerLink });
       newMovieLink.name = server;
-      newMovieLink.providerLink = '';
+      newMovieLink.providerLink = providerLink;
       newMovieLink.videoLink = link;
 
       newMovieServer.movieLinks = [newMovieLink];
