@@ -10,7 +10,11 @@
     "install-backend": "npm --prefix backend install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npm --prefix backend run build",
-    "server": "NODE_ENV=production pm2 start process.json"
+    "server": "NODE_ENV=production pm2 start process.json",
+    "pm2": "pm2 start pm2.json",
+    "pm2-list": "pm2 status",
+    "pm2-status": "pm2 list",
+    "pm2-log": "pm2 log"
   },
   "repository": {
     "type": "git",
@@ -25,5 +29,8 @@
   "engines": {
     "node": "14.17.x",
     "npm": "6.14.13"
+  },
+  "dependencies": {
+    "pm2": "^5.1.0"
   }
 }
