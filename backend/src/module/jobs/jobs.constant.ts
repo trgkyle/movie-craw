@@ -1,6 +1,6 @@
 export const JOB_TYPE = {
-  PHIMMOI_FILM_LIST: 'PHIMMOI_FILM_LIST',
   PHIMMOI_FILM_DETAIL: 'PHIMMOI_FILM_DETAIL',
+  PHIMMOI_FILM_LIST: 'PHIMMOI_FILM_LIST',
   PHIMMOI_CATEGORY_LIST: 'PHIMMOI_CATEGORY_LIST',
 };
 export const jobGroupData = ({type, post_link, numberAccount}) => {
