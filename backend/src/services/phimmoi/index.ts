@@ -27,9 +27,17 @@ export async function getFilmLink(page: puppeteer.Page): Promise<Array<any>> {
     await page.waitForSelector('ul > ul.pagination.pagination-lg > li');
     const aActive = await page.$('ul > ul.pagination.pagination-lg > li > a.active');
     const aText = await page.evaluate((element) => element.textContent, aActive);
-    const linkHandlers = await page.$x(`//a[contains(text(), '${+aText + 1}')]`);
-    if (linkHandlers.length > 0) {
-      await linkHandlers[0].click();
+    const linkHandlers = await page.$$(`ul > ul.pagination.pagination-lg > li > a`);
+    let linkHandler = null;
+    for (const a of linkHandlers) {
+      const text = await page.evaluate((element) => element.textContent, a);
+      if (+text === +aText + 1) {
+        linkHandler = a;
+        break;
+      }
+    }
+    if (linkHandler) {
+      await linkHandler.click();
       await page.waitForNavigation();
       return firmLink.concat(await getFilmLink(page));
     } else {
