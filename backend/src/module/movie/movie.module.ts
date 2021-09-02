@@ -1,6 +1,6 @@
 import { CategoryModule } from './../category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CategoryEntity } from './../category/category.entity';
 import { Category } from './../category/category.schema';
 import { Movie, MoviePart, MovieServer, MovieLink } from './movie.schema';
@@ -18,7 +18,7 @@ import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 @Module({
   providers: [MovieResolver, MovieFunction],
   imports: [
-    CategoryModule,
+    forwardRef(()=>CategoryModule),
     TypeOrmModule.forFeature([MovieEntity]),
     TypeOrmModule.forFeature([MoviePartEntity]),
     TypeOrmModule.forFeature([MovieServerEntity]),
@@ -71,9 +71,6 @@ import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
     MovieResolver,
     MovieFunction,
     TypeOrmModule.forFeature([MovieEntity]),
-    TypeOrmModule.forFeature([MoviePartEntity]),
-    TypeOrmModule.forFeature([MovieServerEntity]),
-    TypeOrmModule.forFeature([MovieLinkEntity]),
   ],
 })
 export class MovieModule {}

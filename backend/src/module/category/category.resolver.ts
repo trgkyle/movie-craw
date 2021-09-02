@@ -1,14 +1,18 @@
+import { CategoryEntity } from './category.entity';
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
+import { Category } from './category.schema';
+import { CRUDResolver } from '@nestjs-query/query-graphql';
 import {
   Resolver,
-  Query,
-  Args,
 } from '@nestjs/graphql';
-import { CategoryFunction } from './category.function';
-import { GetCategoryArgs } from './category.args';
 
 @Resolver()
-export class CategoryResolver {
+export class CategoryResolver extends CRUDResolver(Category, {
+}) {
   constructor(
-    private categoryService: CategoryFunction,
-  ) {}
+    @InjectQueryService(CategoryEntity)
+    readonly service: QueryService<CategoryEntity>,
+  ) {
+    super(service);
+  }
 }

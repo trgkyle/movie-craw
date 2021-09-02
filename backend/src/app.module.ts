@@ -1,3 +1,4 @@
+import { CategoryModule } from './module/category/category.module';
 import { JobsModule } from './module/jobs/jobs.module';
 import { AuthenModule } from './module/authen/authen.module';
 import { Module } from '@nestjs/common';
@@ -34,7 +35,8 @@ import { MovieModule } from './module/movie/movie.module';
     // AuthenModule,
     CronModule,
     JobsModule,
-    MovieModule
+    MovieModule,
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [AppService],

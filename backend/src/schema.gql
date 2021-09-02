@@ -131,12 +131,48 @@ type CategoryLink {
   provider: String!
 }
 
+type CategoryLinkAggregateGroupBy {
+  id: String
+  link: String
+  provider: String
+}
+
+type CategoryLinkAvgAggregate {
+  id: Float
+}
+
+type CategoryLinkCountAggregate {
+  id: Int
+  link: Int
+  provider: Int
+}
+
+type CategoryLinkEdge {
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+
+  """The node containing the CategoryLink"""
+  node: CategoryLink!
+}
+
 input CategoryLinkFilter {
   and: [CategoryLinkFilter!]
   id: StringFieldComparison
   link: StringFieldComparison
   or: [CategoryLinkFilter!]
   provider: StringFieldComparison
+}
+
+type CategoryLinkMaxAggregate {
+  id: String
+  link: String
+  provider: String
+}
+
+type CategoryLinkMinAggregate {
+  id: String
+  link: String
+  provider: String
 }
 
 input CategoryLinkSort {
@@ -149,6 +185,10 @@ enum CategoryLinkSortFields {
   id
   link
   provider
+}
+
+type CategoryLinkSumAggregate {
+  id: Float
 }
 
 type CategoryMaxAggregate {
