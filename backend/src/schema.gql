@@ -2,14 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input AddCategoriesToMovieInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [Int!]!
-}
-
 input AddCategoryLinksToCategoryInput {
   """The id of the record."""
   id: Int!
@@ -19,14 +11,6 @@ input AddCategoryLinksToCategoryInput {
 }
 
 input AddMovieLinksToMovieServerInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [Int!]!
-}
-
-input AddMoviePartsToMovieInput {
   """The id of the record."""
   id: Int!
 
@@ -217,21 +201,6 @@ input CreateManyCategoriesInput {
   categories: [CreateCategory!]!
 }
 
-input CreateManyMovieLinksInput {
-  """Array of records to create"""
-  movieLinks: [CreateMovieLink!]!
-}
-
-input CreateManyMoviePartsInput {
-  """Array of records to create"""
-  movieParts: [CreateMoviePart!]!
-}
-
-input CreateManyMovieServersInput {
-  """Array of records to create"""
-  movieServers: [CreateMovieServer!]!
-}
-
 input CreateManyMoviesInput {
   """Array of records to create"""
   movies: [CreateMovie!]!
@@ -244,23 +213,6 @@ input CreateMovie {
   poster: String
 }
 
-input CreateMovieLink {
-  id: Int
-  name: String
-  videoLink: String
-}
-
-input CreateMoviePart {
-  id: Int
-  part: String
-  type: String
-}
-
-input CreateMovieServer {
-  id: Int
-  provider: String
-}
-
 input CreateOneCategoryInput {
   """The record to create"""
   category: CreateCategory!
@@ -269,21 +221,6 @@ input CreateOneCategoryInput {
 input CreateOneMovieInput {
   """The record to create"""
   movie: CreateMovie!
-}
-
-input CreateOneMovieLinkInput {
-  """The record to create"""
-  movieLink: CreateMovieLink!
-}
-
-input CreateOneMoviePartInput {
-  """The record to create"""
-  moviePart: CreateMoviePart!
-}
-
-input CreateOneMovieServerInput {
-  """The record to create"""
-  movieServer: CreateMovieServer!
 }
 
 input CursorPaging {
@@ -305,21 +242,6 @@ input DeleteManyCategoriesInput {
   filter: CategoryDeleteFilter!
 }
 
-input DeleteManyMovieLinksInput {
-  """Filter to find records to delete"""
-  filter: MovieLinkDeleteFilter!
-}
-
-input DeleteManyMoviePartsInput {
-  """Filter to find records to delete"""
-  filter: MoviePartDeleteFilter!
-}
-
-input DeleteManyMovieServersInput {
-  """Filter to find records to delete"""
-  filter: MovieServerDeleteFilter!
-}
-
 input DeleteManyMoviesInput {
   """Filter to find records to delete"""
   filter: MovieDeleteFilter!
@@ -336,21 +258,6 @@ input DeleteOneCategoryInput {
 }
 
 input DeleteOneMovieInput {
-  """The id of the record to delete."""
-  id: Int!
-}
-
-input DeleteOneMovieLinkInput {
-  """The id of the record to delete."""
-  id: Int!
-}
-
-input DeleteOneMoviePartInput {
-  """The id of the record to delete."""
-  id: Int!
-}
-
-input DeleteOneMovieServerInput {
   """The id of the record to delete."""
   id: Int!
 }
@@ -501,30 +408,9 @@ type MovieLinkAvgAggregate {
   id: Float
 }
 
-type MovieLinkConnection {
-  """Array of edges."""
-  edges: [MovieLinkEdge!]!
-
-  """Paging information"""
-  pageInfo: PageInfo!
-}
-
 type MovieLinkCountAggregate {
   id: Int
   name: Int
-}
-
-input MovieLinkDeleteFilter {
-  and: [MovieLinkDeleteFilter!]
-  id: IntFieldComparison
-  name: StringFieldComparison
-  or: [MovieLinkDeleteFilter!]
-}
-
-type MovieLinkDeleteResponse {
-  id: Int
-  name: String
-  videoLink: String
 }
 
 type MovieLinkEdge {
@@ -567,13 +453,6 @@ type MovieLinkSumAggregate {
   id: Float
 }
 
-input MovieLinkUpdateFilter {
-  and: [MovieLinkUpdateFilter!]
-  id: IntFieldComparison
-  name: StringFieldComparison
-  or: [MovieLinkUpdateFilter!]
-}
-
 type MovieMaxAggregate {
   id: Int
   name: String
@@ -607,32 +486,10 @@ type MoviePartAvgAggregate {
   id: Float
 }
 
-type MoviePartConnection {
-  """Array of edges."""
-  edges: [MoviePartEdge!]!
-
-  """Paging information"""
-  pageInfo: PageInfo!
-}
-
 type MoviePartCountAggregate {
   id: Int
   part: Int
   type: Int
-}
-
-input MoviePartDeleteFilter {
-  and: [MoviePartDeleteFilter!]
-  id: IntFieldComparison
-  or: [MoviePartDeleteFilter!]
-  part: StringFieldComparison
-  type: StringFieldComparison
-}
-
-type MoviePartDeleteResponse {
-  id: Int
-  part: String
-  type: String
 }
 
 type MoviePartEdge {
@@ -687,14 +544,6 @@ type MoviePartSumAggregate {
   id: Float
 }
 
-input MoviePartUpdateFilter {
-  and: [MoviePartUpdateFilter!]
-  id: IntFieldComparison
-  or: [MoviePartUpdateFilter!]
-  part: StringFieldComparison
-  type: StringFieldComparison
-}
-
 type MovieServer {
   id: Int!
   movieLinks(
@@ -716,29 +565,9 @@ type MovieServerAvgAggregate {
   id: Float
 }
 
-type MovieServerConnection {
-  """Array of edges."""
-  edges: [MovieServerEdge!]!
-
-  """Paging information"""
-  pageInfo: PageInfo!
-}
-
 type MovieServerCountAggregate {
   id: Int
   provider: Int
-}
-
-input MovieServerDeleteFilter {
-  and: [MovieServerDeleteFilter!]
-  id: IntFieldComparison
-  or: [MovieServerDeleteFilter!]
-  provider: StringFieldComparison
-}
-
-type MovieServerDeleteResponse {
-  id: Int
-  provider: String
 }
 
 type MovieServerEdge {
@@ -789,13 +618,6 @@ type MovieServerSumAggregate {
   id: Float
 }
 
-input MovieServerUpdateFilter {
-  and: [MovieServerUpdateFilter!]
-  id: IntFieldComparison
-  or: [MovieServerUpdateFilter!]
-  provider: StringFieldComparison
-}
-
 input MovieSort {
   direction: SortDirection!
   field: MovieSortFields!
@@ -819,50 +641,28 @@ input MovieUpdateFilter {
 }
 
 type Mutation {
-  addCategoriesToMovie(input: AddCategoriesToMovieInput!): Movie!
   addCategoryLinksToCategory(input: AddCategoryLinksToCategoryInput!): Category!
   addJob(name: String!): JobsRegisterResult!
   addMovieLinksToMovieServer(input: AddMovieLinksToMovieServerInput!): MovieServer!
-  addMoviePartsToMovie(input: AddMoviePartsToMovieInput!): Movie!
   addMovieServersToMoviePart(input: AddMovieServersToMoviePartInput!): MoviePart!
   addMoviesToCategory(input: AddMoviesToCategoryInput!): Category!
   createManyCategories(input: CreateManyCategoriesInput!): [Category!]!
-  createManyMovieLinks(input: CreateManyMovieLinksInput!): [MovieLink!]!
-  createManyMovieParts(input: CreateManyMoviePartsInput!): [MoviePart!]!
-  createManyMovieServers(input: CreateManyMovieServersInput!): [MovieServer!]!
   createManyMovies(input: CreateManyMoviesInput!): [Movie!]!
   createOneCategory(input: CreateOneCategoryInput!): Category!
   createOneMovie(input: CreateOneMovieInput!): Movie!
-  createOneMovieLink(input: CreateOneMovieLinkInput!): MovieLink!
-  createOneMoviePart(input: CreateOneMoviePartInput!): MoviePart!
-  createOneMovieServer(input: CreateOneMovieServerInput!): MovieServer!
   deleteJob(id: [String!]!): JobsDeleteResult!
   deleteManyCategories(input: DeleteManyCategoriesInput!): DeleteManyResponse!
-  deleteManyMovieLinks(input: DeleteManyMovieLinksInput!): DeleteManyResponse!
-  deleteManyMovieParts(input: DeleteManyMoviePartsInput!): DeleteManyResponse!
-  deleteManyMovieServers(input: DeleteManyMovieServersInput!): DeleteManyResponse!
   deleteManyMovies(input: DeleteManyMoviesInput!): DeleteManyResponse!
   deleteOneCategory(input: DeleteOneCategoryInput!): CategoryDeleteResponse!
   deleteOneMovie(input: DeleteOneMovieInput!): MovieDeleteResponse!
-  deleteOneMovieLink(input: DeleteOneMovieLinkInput!): MovieLinkDeleteResponse!
-  deleteOneMoviePart(input: DeleteOneMoviePartInput!): MoviePartDeleteResponse!
-  deleteOneMovieServer(input: DeleteOneMovieServerInput!): MovieServerDeleteResponse!
-  setCategoriesOnMovie(input: SetCategoriesOnMovieInput!): Movie!
   setCategoryLinksOnCategory(input: SetCategoryLinksOnCategoryInput!): Category!
   setMovieLinksOnMovieServer(input: SetMovieLinksOnMovieServerInput!): MovieServer!
-  setMoviePartsOnMovie(input: SetMoviePartsOnMovieInput!): Movie!
   setMovieServersOnMoviePart(input: SetMovieServersOnMoviePartInput!): MoviePart!
   setMoviesOnCategory(input: SetMoviesOnCategoryInput!): Category!
   updateManyCategories(input: UpdateManyCategoriesInput!): UpdateManyResponse!
-  updateManyMovieLinks(input: UpdateManyMovieLinksInput!): UpdateManyResponse!
-  updateManyMovieParts(input: UpdateManyMoviePartsInput!): UpdateManyResponse!
-  updateManyMovieServers(input: UpdateManyMovieServersInput!): UpdateManyResponse!
   updateManyMovies(input: UpdateManyMoviesInput!): UpdateManyResponse!
   updateOneCategory(input: UpdateOneCategoryInput!): Category!
   updateOneMovie(input: UpdateOneMovieInput!): Movie!
-  updateOneMovieLink(input: UpdateOneMovieLinkInput!): MovieLink!
-  updateOneMoviePart(input: UpdateOneMoviePartInput!): MoviePart!
-  updateOneMovieServer(input: UpdateOneMovieServerInput!): MovieServer!
 }
 
 type PageInfo {
@@ -899,48 +699,6 @@ type Query {
     """The id of the record to find."""
     id: Int!
   ): Movie
-  movieLink(
-    """The id of the record to find."""
-    id: Int!
-  ): MovieLink
-  movieLinks(
-    """Specify to filter the records returned."""
-    filter: MovieLinkFilter = {}
-
-    """Limit or page results."""
-    paging: CursorPaging = {first: 10}
-
-    """Specify to sort results."""
-    sorting: [MovieLinkSort!] = []
-  ): MovieLinkConnection!
-  moviePart(
-    """The id of the record to find."""
-    id: Int!
-  ): MoviePart
-  movieParts(
-    """Specify to filter the records returned."""
-    filter: MoviePartFilter = {}
-
-    """Limit or page results."""
-    paging: CursorPaging = {first: 10}
-
-    """Specify to sort results."""
-    sorting: [MoviePartSort!] = []
-  ): MoviePartConnection!
-  movieServer(
-    """The id of the record to find."""
-    id: Int!
-  ): MovieServer
-  movieServers(
-    """Specify to filter the records returned."""
-    filter: MovieServerFilter = {}
-
-    """Limit or page results."""
-    paging: CursorPaging = {first: 10}
-
-    """Specify to sort results."""
-    sorting: [MovieServerSort!] = []
-  ): MovieServerConnection!
   movies(
     """Specify to filter the records returned."""
     filter: MovieFilter = {}
@@ -953,14 +711,6 @@ type Query {
   ): MovieConnection!
 }
 
-input SetCategoriesOnMovieInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [Int!]!
-}
-
 input SetCategoryLinksOnCategoryInput {
   """The id of the record."""
   id: Int!
@@ -970,14 +720,6 @@ input SetCategoryLinksOnCategoryInput {
 }
 
 input SetMovieLinksOnMovieServerInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [Int!]!
-}
-
-input SetMoviePartsOnMovieInput {
   """The id of the record."""
   id: Int!
 
@@ -1044,30 +786,6 @@ input UpdateManyCategoriesInput {
   update: UpdateCategory!
 }
 
-input UpdateManyMovieLinksInput {
-  """Filter used to find fields to update"""
-  filter: MovieLinkUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateMovieLink!
-}
-
-input UpdateManyMoviePartsInput {
-  """Filter used to find fields to update"""
-  filter: MoviePartUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateMoviePart!
-}
-
-input UpdateManyMovieServersInput {
-  """Filter used to find fields to update"""
-  filter: MovieServerUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateMovieServer!
-}
-
 input UpdateManyMoviesInput {
   """Filter used to find fields to update"""
   filter: MovieUpdateFilter!
@@ -1088,23 +806,6 @@ input UpdateMovie {
   poster: String
 }
 
-input UpdateMovieLink {
-  id: Int
-  name: String
-  videoLink: String
-}
-
-input UpdateMoviePart {
-  id: Int
-  part: String
-  type: String
-}
-
-input UpdateMovieServer {
-  id: Int
-  provider: String
-}
-
 input UpdateOneCategoryInput {
   """The id of the record to update"""
   id: Int!
@@ -1119,28 +820,4 @@ input UpdateOneMovieInput {
 
   """The update to apply."""
   update: UpdateMovie!
-}
-
-input UpdateOneMovieLinkInput {
-  """The id of the record to update"""
-  id: Int!
-
-  """The update to apply."""
-  update: UpdateMovieLink!
-}
-
-input UpdateOneMoviePartInput {
-  """The id of the record to update"""
-  id: Int!
-
-  """The update to apply."""
-  update: UpdateMoviePart!
-}
-
-input UpdateOneMovieServerInput {
-  """The id of the record to update"""
-  id: Int!
-
-  """The update to apply."""
-  update: UpdateMovieServer!
 }

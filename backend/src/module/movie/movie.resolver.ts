@@ -1,13 +1,15 @@
-import {
-  Resolver,
-  Query,
-  Args,
-} from '@nestjs/graphql';
-import { MovieFunction } from './movie.function';
-
-@Resolver()
-export class MovieResolver {
+import { Movie } from './movie.schema';
+import { Resolver } from '@nestjs/graphql';
+import { CRUDResolver } from '@nestjs-query/query-graphql';
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
+import { MovieEntity } from './movie.entity';
+@Resolver(() => Movie)
+export class MovieResolver extends CRUDResolver(Movie, {
+}) {
   constructor(
-    private movieService: MovieFunction,
-  ) {}
+    @InjectQueryService(MovieEntity)
+    readonly service: QueryService<MovieEntity>,
+  ) {
+    super(service);
+  }
 }

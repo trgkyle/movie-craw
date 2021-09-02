@@ -1,7 +1,9 @@
+import { CategoryModule } from './../category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
-import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { CategoryEntity } from './../category/category.entity';
+import { Category } from './../category/category.schema';
+import { Movie, MoviePart, MovieServer, MovieLink } from './movie.schema';
 import { MovieResolver } from './movie.resolver';
 import {
   MovieEntity,
@@ -10,11 +12,11 @@ import {
   MovieServerEntity,
 } from './movie.entity';
 import { MovieFunction } from './movie.function';
-
-import { Movie, MovieLink, MoviePart, MovieServer } from './movie.schema';
-import { CategoryModule } from '../category/category.module';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 
 @Module({
+  providers: [MovieResolver, MovieFunction],
   imports: [
     CategoryModule,
     TypeOrmModule.forFeature([MovieEntity]),
@@ -28,15 +30,43 @@ import { CategoryModule } from '../category/category.module';
         NestjsQueryTypeOrmModule.forFeature([MovieServerEntity]),
         NestjsQueryTypeOrmModule.forFeature([MovieLinkEntity]),
       ],
+      dtos: [{ DTOClass: Movie }],
       resolvers: [
-        { DTOClass: Movie, EntityClass: MovieEntity },
-        { DTOClass: MoviePart, EntityClass: MoviePartEntity },
-        { DTOClass: MovieServer, EntityClass: MovieServerEntity },
-        { DTOClass: MovieLink, EntityClass: MovieLinkEntity },
+        {
+          DTOClass: Movie,
+          EntityClass: MovieEntity,
+          create: { disabled: true },
+          update: { disabled: true },
+          delete: { disabled: true },
+          read: { disabled: true },
+        },
+        {
+          DTOClass: MoviePart,
+          EntityClass: MoviePartEntity,
+          create: { disabled: true },
+          update: { disabled: true },
+          delete: { disabled: true },
+          read: { disabled: true },
+        },
+        {
+          DTOClass: MovieServer,
+          EntityClass: MovieServerEntity,
+          create: { disabled: true },
+          update: { disabled: true },
+          delete: { disabled: true },
+          read: { disabled: true },
+        },
+        {
+          DTOClass: MovieLink,
+          EntityClass: MovieLinkEntity,
+          create: { disabled: true },
+          update: { disabled: true },
+          delete: { disabled: true },
+          read: { disabled: true },
+        },
       ],
     }),
   ],
-  providers: [MovieResolver, MovieFunction],
   exports: [
     MovieResolver,
     MovieFunction,
