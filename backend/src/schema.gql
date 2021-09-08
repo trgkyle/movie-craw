@@ -2,14 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input AddCategoryLinksToCategoryInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [String!]!
-}
-
 input AddMovieLinksToMovieServerInput {
   """The id of the record."""
   id: Int!
@@ -19,14 +11,6 @@ input AddMovieLinksToMovieServerInput {
 }
 
 input AddMovieServersToMoviePartInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [Int!]!
-}
-
-input AddMoviesToCategoryInput {
   """The id of the record."""
   id: Int!
 
@@ -76,20 +60,6 @@ type CategoryCountAggregate {
   id: Int
   name: Int
   type: Int
-}
-
-input CategoryDeleteFilter {
-  and: [CategoryDeleteFilter!]
-  id: IntFieldComparison
-  name: StringFieldComparison
-  or: [CategoryDeleteFilter!]
-  type: StringFieldComparison
-}
-
-type CategoryDeleteResponse {
-  id: Int
-  name: String
-  type: String
 }
 
 type CategoryEdge {
@@ -219,48 +189,12 @@ type CategorySumAggregate {
   id: Float
 }
 
-input CategoryUpdateFilter {
-  and: [CategoryUpdateFilter!]
-  id: IntFieldComparison
-  name: StringFieldComparison
-  or: [CategoryUpdateFilter!]
-  type: StringFieldComparison
-}
-
 """Cursor for paging through collections"""
 scalar ConnectionCursor
 
-input CreateCategory {
-  id: Int
-  name: String
-  type: String
-}
-
-input CreateManyCategoriesInput {
-  """Array of records to create"""
-  categories: [CreateCategory!]!
-}
-
-input CreateManyMoviesInput {
-  """Array of records to create"""
-  movies: [CreateMovie!]!
-}
-
-input CreateMovie {
-  description: String
-  id: Int
-  name: String
-  poster: String
-}
-
-input CreateOneCategoryInput {
-  """The record to create"""
-  category: CreateCategory!
-}
-
-input CreateOneMovieInput {
-  """The record to create"""
-  movie: CreateMovie!
+input CreateMovieSubscriptionFilterInput {
+  """Specify to filter the records returned."""
+  filter: MovieSubscriptionFilter!
 }
 
 input CursorPaging {
@@ -277,29 +211,14 @@ input CursorPaging {
   last: Int
 }
 
-input DeleteManyCategoriesInput {
-  """Filter to find records to delete"""
-  filter: CategoryDeleteFilter!
-}
-
-input DeleteManyMoviesInput {
-  """Filter to find records to delete"""
-  filter: MovieDeleteFilter!
-}
-
 type DeleteManyResponse {
   """The number of records deleted."""
   deletedCount: Int!
 }
 
-input DeleteOneCategoryInput {
-  """The id of the record to delete."""
-  id: Int!
-}
-
-input DeleteOneMovieInput {
-  """The id of the record to delete."""
-  id: Int!
+input DeleteOneMovieSubscriptionFilterInput {
+  """Specify to filter the records returned."""
+  filter: MovieSubscriptionFilter!
 }
 
 input IntFieldComparison {
@@ -384,13 +303,6 @@ type MovieConnection {
 type MovieCountAggregate {
   id: Int
   name: Int
-}
-
-input MovieDeleteFilter {
-  and: [MovieDeleteFilter!]
-  id: IntFieldComparison
-  name: StringFieldComparison
-  or: [MovieDeleteFilter!]
 }
 
 type MovieDeleteResponse {
@@ -669,40 +581,24 @@ enum MovieSortFields {
   name
 }
 
+input MovieSubscriptionFilter {
+  and: [MovieSubscriptionFilter!]
+  id: IntFieldComparison
+  name: StringFieldComparison
+  or: [MovieSubscriptionFilter!]
+}
+
 type MovieSumAggregate {
   id: Float
 }
 
-input MovieUpdateFilter {
-  and: [MovieUpdateFilter!]
-  id: IntFieldComparison
-  name: StringFieldComparison
-  or: [MovieUpdateFilter!]
-}
-
 type Mutation {
-  addCategoryLinksToCategory(input: AddCategoryLinksToCategoryInput!): Category!
   addJob(name: String!): JobsRegisterResult!
   addMovieLinksToMovieServer(input: AddMovieLinksToMovieServerInput!): MovieServer!
   addMovieServersToMoviePart(input: AddMovieServersToMoviePartInput!): MoviePart!
-  addMoviesToCategory(input: AddMoviesToCategoryInput!): Category!
-  createManyCategories(input: CreateManyCategoriesInput!): [Category!]!
-  createManyMovies(input: CreateManyMoviesInput!): [Movie!]!
-  createOneCategory(input: CreateOneCategoryInput!): Category!
-  createOneMovie(input: CreateOneMovieInput!): Movie!
   deleteJob(id: [String!]!): JobsDeleteResult!
-  deleteManyCategories(input: DeleteManyCategoriesInput!): DeleteManyResponse!
-  deleteManyMovies(input: DeleteManyMoviesInput!): DeleteManyResponse!
-  deleteOneCategory(input: DeleteOneCategoryInput!): CategoryDeleteResponse!
-  deleteOneMovie(input: DeleteOneMovieInput!): MovieDeleteResponse!
-  setCategoryLinksOnCategory(input: SetCategoryLinksOnCategoryInput!): Category!
   setMovieLinksOnMovieServer(input: SetMovieLinksOnMovieServerInput!): MovieServer!
   setMovieServersOnMoviePart(input: SetMovieServersOnMoviePartInput!): MoviePart!
-  setMoviesOnCategory(input: SetMoviesOnCategoryInput!): Category!
-  updateManyCategories(input: UpdateManyCategoriesInput!): UpdateManyResponse!
-  updateManyMovies(input: UpdateManyMoviesInput!): UpdateManyResponse!
-  updateOneCategory(input: UpdateOneCategoryInput!): Category!
-  updateOneMovie(input: UpdateOneMovieInput!): Movie!
 }
 
 type PageInfo {
@@ -751,14 +647,6 @@ type Query {
   ): MovieConnection!
 }
 
-input SetCategoryLinksOnCategoryInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [String!]!
-}
-
 input SetMovieLinksOnMovieServerInput {
   """The id of the record."""
   id: Int!
@@ -768,14 +656,6 @@ input SetMovieLinksOnMovieServerInput {
 }
 
 input SetMovieServersOnMoviePartInput {
-  """The id of the record."""
-  id: Int!
-
-  """The ids of the relations."""
-  relationIds: [Int!]!
-}
-
-input SetMoviesOnCategoryInput {
   """The id of the record."""
   id: Int!
 
@@ -812,26 +692,12 @@ input StringFieldComparison {
   notLike: String
 }
 
-input UpdateCategory {
-  id: Int
-  name: String
-  type: String
-}
-
-input UpdateManyCategoriesInput {
-  """Filter used to find fields to update"""
-  filter: CategoryUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateCategory!
-}
-
-input UpdateManyMoviesInput {
-  """Filter used to find fields to update"""
-  filter: MovieUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateMovie!
+type Subscription {
+  createdMovie(input: CreateMovieSubscriptionFilterInput): Movie!
+  deletedManyMovies: DeleteManyResponse!
+  deletedOneMovie(input: DeleteOneMovieSubscriptionFilterInput): MovieDeleteResponse!
+  updatedManyMovies: UpdateManyResponse!
+  updatedOneMovie(input: UpdateOneMovieSubscriptionFilterInput): Movie!
 }
 
 type UpdateManyResponse {
@@ -839,25 +705,7 @@ type UpdateManyResponse {
   updatedCount: Int!
 }
 
-input UpdateMovie {
-  description: String
-  id: Int
-  name: String
-  poster: String
-}
-
-input UpdateOneCategoryInput {
-  """The id of the record to update"""
-  id: Int!
-
-  """The update to apply."""
-  update: UpdateCategory!
-}
-
-input UpdateOneMovieInput {
-  """The id of the record to update"""
-  id: Int!
-
-  """The update to apply."""
-  update: UpdateMovie!
+input UpdateOneMovieSubscriptionFilterInput {
+  """Specify to filter the records returned."""
+  filter: MovieSubscriptionFilter!
 }

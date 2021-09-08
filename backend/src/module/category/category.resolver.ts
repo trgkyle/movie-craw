@@ -8,6 +8,9 @@ import {
 
 @Resolver()
 export class CategoryResolver extends CRUDResolver(Category, {
+  create: { disabled: true },
+  update: { disabled: true },
+  delete: { disabled: true },
 }) {
   constructor(
     @InjectQueryService(CategoryEntity)

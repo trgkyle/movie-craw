@@ -112,23 +112,7 @@ export class MovieFunction {
     }
     return false;
   }
-  public async getAllMovies(): Promise<any> {
-    const movie = await this.movieRepository
-      .createQueryBuilder('movie')
-      .leftJoinAndSelect('movie.movieParts', 'movie-part')
-      .leftJoinAndSelect('movie-part.movieServers', 'movie-server')
-      .leftJoinAndSelect('movie-server.movieLinks', 'movie-link')
-      .getMany();
-    return movie;
-  }
-  public async getMovieById(id: Number): Promise<any> {
-    const movie = await this.movieRepository
-      .createQueryBuilder('movie')
-      .where('movie.id = :id', { id })
-      .leftJoinAndSelect('movie.movieParts', 'movie-part')
-      .leftJoinAndSelect('movie-part.movieServers', 'movie-server')
-      .leftJoinAndSelect('movie-server.movieLinks', 'movie-link')
-      .getOne();
-    return movie;
+  public async addMovieCrawl(name: any, id: any): Promise<any> {
+    console.log("Add movie crawl");
   }
 }

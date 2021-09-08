@@ -3,8 +3,8 @@ import { FilterableField, FilterableUnPagedRelation, IDField } from '@nestjs-que
 import { Movie } from '../movie/movie.schema';
 
 @ObjectType()
-@FilterableUnPagedRelation('categoryLinks', () => CategoryLink, { disableRemove: true })
-@FilterableUnPagedRelation('movies', () => Movie, { disableRemove: true })
+@FilterableUnPagedRelation('categoryLinks', () => CategoryLink, { disableRemove: true, disableUpdate: true})
+@FilterableUnPagedRelation('movies', () => Movie, { disableRemove: true, disableUpdate: true })
 export class Category {
   @IDField((type) => Int)
   id: number;

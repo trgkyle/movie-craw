@@ -1,8 +1,8 @@
+import { MovieQueryManyHooks } from './hooks/movie.querymany.hooks';
+import { MovieQueryOneHooks } from './hooks/movie.queryone.hooks';
 import { CategoryModule } from './../category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { forwardRef, Module } from '@nestjs/common';
-import { CategoryEntity } from './../category/category.entity';
-import { Category } from './../category/category.schema';
 import { Movie, MoviePart, MovieServer, MovieLink } from './movie.schema';
 import { MovieResolver } from './movie.resolver';
 import {
