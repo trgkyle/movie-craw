@@ -1,3 +1,4 @@
+import { QueueModule } from './queues/queue.module';
 import { CategoryModule } from './module/category/category.module';
 import { JobsModule } from './module/jobs/jobs.module';
 import { AuthenModule } from './module/authen/authen.module';
@@ -11,6 +12,7 @@ import { UserModule } from './module/user/user.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CronModule } from './cron/cron.module';
 import { MovieModule } from './module/movie/movie.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -18,6 +20,10 @@ import { MovieModule } from './module/movie/movie.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+    }),
+    BullModule.registerQueue({
+      name: 'movie-queue',
+      processors: [join(__dirname, 'processor.js')],
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
@@ -36,7 +42,8 @@ import { MovieModule } from './module/movie/movie.module';
     CronModule,
     JobsModule,
     MovieModule,
-    CategoryModule
+    CategoryModule,
+    QueueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,7 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CategoryEntity } from '../category/category.entity';
-
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 /*
     - Movie
       + name (*)
@@ -43,6 +44,7 @@ export class MovieFunction {
     private movieLinkRepository: Repository<MovieLinkEntity>,
     @InjectRepository(CategoryEntity)
     private categoryRepository: Repository<CategoryEntity>,
+    @InjectQueue('movie-queue') private movieQueue: Queue
   ) {}
   public async createNewMovieLink(providerLink: string): Promise<any> {
     const newMovieLink = new MovieLinkEntity();
@@ -114,5 +116,6 @@ export class MovieFunction {
   }
   public async addMovieCrawl(name: any, id: any): Promise<any> {
     console.log("Add movie crawl");
+    this.movieQueue.add({ name, id });
   }
 }

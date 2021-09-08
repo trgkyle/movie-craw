@@ -1,5 +1,3 @@
-import { MovieQueryManyHooks } from './hooks/movie.querymany.hooks';
-import { MovieQueryOneHooks } from './hooks/movie.queryone.hooks';
 import { CategoryModule } from './../category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { forwardRef, Module } from '@nestjs/common';
