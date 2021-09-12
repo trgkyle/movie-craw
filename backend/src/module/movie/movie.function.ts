@@ -44,7 +44,7 @@ export class MovieFunction {
     private movieLinkRepository: Repository<MovieLinkEntity>,
     @InjectRepository(CategoryEntity)
     private categoryRepository: Repository<CategoryEntity>,
-    @InjectQueue('movie-queue') private movieQueue: Queue
+    @InjectQueue('movie-queue') private movieQueue: Queue,
   ) {}
   public async createNewMovieLink(providerLink: string): Promise<any> {
     const newMovieLink = new MovieLinkEntity();
@@ -79,7 +79,9 @@ export class MovieFunction {
       newMoviePart.part = 'FULL';
       const newMovieServer = new MovieServerEntity();
       newMovieServer.provider = provider;
-      const newMovieLink = await this.movieLinkRepository.findOne({ providerLink });
+      const newMovieLink = await this.movieLinkRepository.findOne({
+        providerLink,
+      });
       newMovieLink.name = server;
       newMovieLink.providerLink = providerLink;
       newMovieLink.videoLink = link;
@@ -115,7 +117,12 @@ export class MovieFunction {
     return false;
   }
   public async addMovieCrawl(name: any, id: any): Promise<any> {
-    console.log("Add movie crawl");
-    this.movieQueue.add({ name, id });
+    if (name) {
+      console.log('crawl-movie-name');
+      this.movieQueue.add('crawl-movie-name', { name });
+    } else if (id) {
+      console.log('crawl-movie-info');
+      this.movieQueue.add('crawl-movie-info', { id });
+    }
   }
 }

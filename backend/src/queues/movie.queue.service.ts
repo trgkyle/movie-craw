@@ -2,21 +2,19 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Processor, Process, OnQueueActive } from '@nestjs/bull';
 import { Job } from 'bull';
 import { JobsFunction } from '../module/jobs/jobs.function';
-// import { facebookService } from '../services/facebook';
 
 @Injectable()
 @Processor('movie-queue')
-export class MovieDetailQueueService {
-
+export class MovieQueueService {
   @OnQueueActive()
   onActive(job: Job) {
     console.log(
-      `Processing job ${job.id} of type ${job.name} with data ${job.data}...`,
+      `Processing job ${job.id} of type ${job.name} with data ${JSON.stringify(job.data)}...`,
     );
   }
-  @Process('crawl-info')
-  async transcode(job: Job<unknown>) {
-    console.log("Run queue");
+  @Process('crawl-movie-name')
+  async crawlMovieName(job: Job<unknown>) {
+    console.log("Run queue", JSON.stringify(job.data));
     return {};
   }
 }

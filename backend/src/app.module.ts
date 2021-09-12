@@ -21,9 +21,11 @@ import { BullModule } from '@nestjs/bull';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
-    BullModule.registerQueue({
-      name: 'movie-queue',
-      processors: [join(__dirname, 'processor.js')],
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 49264,
+      },
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',

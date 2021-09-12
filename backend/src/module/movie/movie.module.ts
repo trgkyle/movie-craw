@@ -1,3 +1,5 @@
+import { join } from 'path';
+import { BullModule } from '@nestjs/bull';
 import { CategoryModule } from './../category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { forwardRef, Module } from '@nestjs/common';
@@ -16,6 +18,10 @@ import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 @Module({
   providers: [MovieResolver, MovieFunction],
   imports: [
+    BullModule.registerQueue({
+      name: 'movie-queue',
+      // processors: [join(__dirname, '../../processor.js')],
+    }),
     forwardRef(()=>CategoryModule),
     TypeOrmModule.forFeature([MovieEntity]),
     TypeOrmModule.forFeature([MoviePartEntity]),
