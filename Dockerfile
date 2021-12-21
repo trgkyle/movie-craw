@@ -1,4 +1,4 @@
-FROM node:12.18.2-alpine
+FROM node:14-alpine
 ENV PRODUCTION true
 WORKDIR /movie-craw
 RUN npm i -g @nestjs/cli
