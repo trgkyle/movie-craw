@@ -13,6 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          clean: true
+          fetch-depth: 2
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: Build and push Docker image for Horus backend
+        env:
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          IMAGE_NAME=$DOCKER_URL/$DOCKER_HUB_NAMESPACE/$GITHUB_REPOSITORY_NAME_PART:$GITHUB_REF_NAME-$GITHUB_SHA_SHORT
+          DOCKER_BUILDKIT=1 docker build -f Dockerfile -t $IMAGE_NAME .
+          echo "$DOCKER_HUB_PASSWORD" | docker login --username $DOCKER_HUB_USERNAME --password-stdin $DOCKER_URL
+          docker push $IMAGE_NAME
+          docker logout
