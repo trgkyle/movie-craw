@@ -1,11 +1,13 @@
-name: Docker Image CI
+name: CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - "**"
 
+env:
+  DOCKER_URL: registry.hub.docker.com
+  DOCKER_HUB_USERNAME: truonghdpk
 jobs:
 
   build:
@@ -26,7 +28,7 @@ jobs:
         env:
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: |
-          IMAGE_NAME=$DOCKER_URL/$DOCKER_HUB_NAMESPACE/$GITHUB_REPOSITORY_NAME_PART:$GITHUB_REF_NAME-$GITHUB_SHA_SHORT
+          IMAGE_NAME=$DOCKER_URL/$GITHUB_REPOSITORY_NAME_PART:$GITHUB_REF_NAME-$GITHUB_SHA_SHORT
           DOCKER_BUILDKIT=1 docker build -f Dockerfile -t $IMAGE_NAME .
           echo "$DOCKER_HUB_PASSWORD" | docker login --username $DOCKER_HUB_USERNAME --password-stdin $DOCKER_URL
           docker push $IMAGE_NAME
