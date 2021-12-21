@@ -1,0 +1,5 @@
+version: "3"
+services:
+  backend:
+    restart: always
+    image: registry.hub.docker.com/truonghdpk/movie-craw:master-19490a9a
