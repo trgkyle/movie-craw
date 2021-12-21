@@ -5,6 +5,7 @@ RUN npm i -g @nestjs/cli
 COPY ./package.json .
 COPY ./backend/package.json ./backend/package.json
 RUN npm install
+RUN npm run install-backend
 ADD . .
 RUN npm run build
 CMD ["npm", "--prefix", "backend", "run", "start:temp"]
